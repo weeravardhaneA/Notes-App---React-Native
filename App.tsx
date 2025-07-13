@@ -45,6 +45,9 @@ function App() {
   const [Title, setTitle] = useState("")
   const [Note, setNote] = useState("")
 
+  const [SelectModeOn, setSelectModeOn] = useState(false)
+  const [SelectedItems, setSelectedItems] = useState<any>([])
+
   const [AllNotes, setAllNotes] = useState([
 
     {id: 1, title: "hello", note: "text1"},
@@ -68,7 +71,7 @@ function App() {
 
 
 
-  // Permissions ============================================
+  // Functions ============================================
 
   const onStart = async () => {
 
@@ -137,6 +140,56 @@ function App() {
 
   }, [])
 
+
+
+  const CheckSelected = (id: number) => {
+
+    const result = SelectedItems.find((item: any) => {
+
+      if(item == id)
+      {
+        return true
+      }
+
+    })
+
+    return result
+
+  }
+
+  const AddToSelectedItems = (id: number) => {
+
+    if(SelectedItems.length <= 0)
+    {
+      setSelectModeOn(true)
+    }
+
+    const newArray = [...SelectedItems, id]
+
+    setSelectedItems(newArray)
+
+  }
+
+  const RemoveFromSelectedItems = (id: number) => {
+
+    const newArray = SelectedItems.filter((item: any) => {
+
+      if(item != id)
+      {
+        return item
+      }
+
+    })
+
+    setSelectedItems(newArray)
+
+    if(newArray.length <= 0)
+    {
+      setSelectModeOn(false)
+    }
+
+  }
+
   // ============================================
   // ============================================
   // ============================================
@@ -153,16 +206,30 @@ function App() {
   
   const onNotePress = (id:number) => {
     
-    setClickedId(id);
-    const ClickedItem = ShowingNotes.find((item: any)=>item.id==id)
-
-    setActiveScreen("note")
-    setNoteStatus("update")
-
-    if(ClickedItem)
+    if(SelectModeOn)
     {
-      setTitle(ClickedItem.title)
-      setNote(ClickedItem.note)
+      if(CheckSelected(id))
+      {
+        RemoveFromSelectedItems(id)
+      }
+      else
+      {
+        AddToSelectedItems(id)
+      }
+    }
+    else
+    {
+      setClickedId(id);
+      const ClickedItem = ShowingNotes.find((item: any)=>item.id==id)
+  
+      setActiveScreen("note")
+      setNoteStatus("update")
+  
+      if(ClickedItem)
+      {
+        setTitle(ClickedItem.title)
+        setNote(ClickedItem.note)
+      }
     }
 
   }
@@ -214,10 +281,46 @@ function App() {
     setNote("")
   }
 
+
+  const onDeletePress = () => {
+    
+    const newArray = AllNotes.filter((item) => {
+
+      if(!SelectedItems.includes(item.id))
+      {
+        return item
+      }
+
+    })
+
+    setAllNotes(newArray)
+    setSelectedItems([])
+    setSelectModeOn(false)
+
+  }
+
   // ============================================
   // ============================================
   // ============================================
 
+
+  // onLongPress ============================================
+
+  const onNoteLongPress = (id: number) => {
+
+    if(CheckSelected(id))
+    {
+      RemoveFromSelectedItems(id)
+    }
+    else
+    {
+      AddToSelectedItems(id)
+    }
+  }
+
+  // ============================================
+  // ============================================
+  // ============================================
 
 
   // onChange ============================================
@@ -264,11 +367,30 @@ function App() {
               onChangeText={(text)=>{onSearchTextChange(text)}}
             ></TextInput>
           </View>
-          <TouchableOpacity
-            onPress={onPlusPress}
-          >
-            <Text style={s.b1t}>+</Text>
-          </TouchableOpacity>
+
+          <View style={s.v8}>
+
+            { SelectModeOn ?
+              
+              <TouchableOpacity
+                onPress={onDeletePress}
+              >
+                
+                <Text style={s.b1t2}>🗑️</Text>
+
+              </TouchableOpacity>
+
+              :
+
+              <TouchableOpacity
+                onPress={onPlusPress}
+              >
+                <Text style={s.b1t1}>+</Text>
+              </TouchableOpacity>
+            }
+
+          </View>
+
         </View>
   
         <FlatList
@@ -278,7 +400,11 @@ function App() {
           columnWrapperStyle={s.colStyle}
           renderItem={({item})=> 
           
-            <TouchableOpacity style={s.v2} onPress={()=>onNotePress(item.id)}>
+            <TouchableOpacity
+              style={CheckSelected(item.id) ? s.v7 : s.v2}
+              onPress={()=>onNotePress(item.id)}
+              onLongPress={()=>onNoteLongPress(item.id)}
+            >
               <Text style={s.t1}>{item.title}</Text>
               <Text style={s.t2}>{item.note}</Text>
             </TouchableOpacity>

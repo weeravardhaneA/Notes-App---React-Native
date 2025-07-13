@@ -37,7 +37,7 @@ const s = StyleSheet.create({
     elevation: 2,
   },
 
-  b1t: {
+  b1t1: {
     fontSize: 38,
     fontWeight: "900",
     color: "#0c4a6e",
@@ -45,6 +45,25 @@ const s = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 6,
   },
+
+  b1t2: {
+    fontSize: 27,
+    fontWeight: "900",
+    color: "#dc2626",
+    textShadowColor: "#fecaca",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 6,
+    textAlign: "center",
+  },
+
+  v8: {
+    width: 30,
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
 
   v2: {
     width: ScreenWidth * 0.43,
@@ -188,6 +207,25 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff7ed",
   },
+
+  v7: {
+    width: ScreenWidth * 0.43,
+    minHeight: 140,
+    backgroundColor: "#d1fae5", // light green to indicate selection
+    borderRadius: 20,
+    padding: 18,
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: "#10b981", // emerald green border
+    shadowColor: "#059669", // darker green shadow
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 7,
+    justifyContent: "flex-start",
+  },
+
+
 });
 
 export default s;
