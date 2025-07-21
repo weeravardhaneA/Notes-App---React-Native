@@ -5,6 +5,8 @@
  * @format
  */
 
+import {API_URL} from "@env";
+import axios from "axios";
 import s from "./Styles"
 import React, { useEffect, useState } from 'react';
 import {
@@ -64,6 +66,30 @@ function App() {
     setShowingNotes(AllNotes)
 
   }, [AllNotes])
+
+  // ============================================
+  // ============================================
+  // ============================================
+
+
+  // APIs ============================================
+
+  const GetAllNotesAPI = async () => {
+
+    try
+    {
+      const response = await axios.get(API_URL);
+      
+      const result = response.data
+
+      console.log(result)
+    }
+    catch(err)
+    {
+      console.error("GetAllNotesAPI failed:", err);
+    }
+
+  }
 
   // ============================================
   // ============================================
@@ -201,6 +227,7 @@ function App() {
 
     setActiveScreen("note")
     setNoteStatus("insert")
+    GetAllNotesAPI()
 
   }
   
