@@ -36,7 +36,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const [ShowingNotes, setShowingNotes] = useState<DataObjectType[]>([])
 
   const [Connected, setConnected] = useState<boolean|null>(null)
-  const [UnsyncedNotesExist, setUnsyncedNotesExist] = useState<boolean>(true)
+  const [UnsyncedNotesExist, setUnsyncedNotesExist] = useState<boolean>(false)
 
 
   // ==================================================
@@ -50,8 +50,17 @@ export const AppProvider = ({children}:AppProviderProps) => {
 
     if(Connected)
     {
-      await UpdateAllNotesAPI(data)
-      await RNFS.writeFile(AllNotesFilePath, JSON.stringify(data), "utf8")
+      const result = await UpdateAllNotesAPI(data)
+
+      if(result === "success")
+      {
+        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(data), "utf8")
+      }
+      else
+      {
+        await RNFS.writeFile(UnsyncedNotesFilePath, JSON.stringify(data), "utf8")
+        setUnsyncedNotesExist(true)
+      }
     }
     else
     {

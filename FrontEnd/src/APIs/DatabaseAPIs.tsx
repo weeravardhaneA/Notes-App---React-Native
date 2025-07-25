@@ -11,14 +11,19 @@ const UpdateAllNotesAPI = async (DataArray:DataObjectType[]) => {
 
    try
   {
-    const response = await axios.post(API_URL + "/update", {DataArray})
+    const response = await axios.post(API_URL + "/update", {DataArray}, {timeout: 3000})
 
     const result = response.data
 
     console.log(result)
+
+    return ("success")
   }
   catch(err)
   {
+    console.log("Update Failed")
+    
+    return ("failed")
   }
 }
 

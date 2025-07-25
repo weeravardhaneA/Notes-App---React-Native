@@ -60,9 +60,19 @@ const UnsyncedWarningBar = (
           {
             const JsonData = await RNFS.readFile(UnsyncedNotesFilePath)
             const data = JSON.parse(JsonData)
-            await UpdateAllNotesAPI(data)
-            await RNFS.unlink(UnsyncedNotesFilePath)
-            setUnsyncedNotesExist(false)
+            
+            const result = await UpdateAllNotesAPI(data)
+
+            if(result === "success")
+            {
+              await RNFS.unlink(UnsyncedNotesFilePath)
+              setUnsyncedNotesExist(false)
+            }
+            else
+            {
+              setUnsyncedNotesExist(true)
+            }
+
           }
           else
           {
