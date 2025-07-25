@@ -1,24 +1,26 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("dotenv").config()
+require("dotenv").config();
+const mongoose = require("mongoose");
 
-const Connect = () => {
+const GetData = require("./Files/API/GetData")
+const UpdateAPI = require("./Files/API/UpdateAPI")
+
+const Connect = async () => {
 
   try
   {
+    await mongoose.connect(process.env.MONGODB_URI)
+
     app.use(cors({
-      origin: process.env.FORNTEND_ORIGIN || "*",
+      origin: process.env.FRONTEND_ORIGIN || "*",
       credentials: true
     }))
     app.use(express.json())
 
-    app.get("/api", async (req, res) => {
-
-      console.log("api call received");
-      res.json("api call received")
-
-    })
+    app.use("/api/get-data", GetData);
+    app.use("/api/update", UpdateAPI);
 
     app.listen(process.env.PORT || 5000)
     console.log("Connected");
