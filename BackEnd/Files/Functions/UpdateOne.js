@@ -5,14 +5,11 @@ const UpdateOne = async (collection, filter, fieldsToUpdate) => {
   try
   {
     const result = await collection.updateOne(filter, fieldsToUpdate, {upsert: true})
-    console.log(result);
+    log(result);
   }
   catch(err)
   {
-    console.log("UpdateOne Failed :=== " + err);
-  }
-  finally
-  {
+    log("UpdateOne Failed :=== " + err);
   }
 
 }

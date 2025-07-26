@@ -1,3 +1,4 @@
+import { DeleteNotesAPI } from "../APIs/DatabaseAPIs";
 import { DataObjectType } from "../Types/Types";
 import { useAppContext } from "./useAppContext"
 
@@ -6,7 +7,7 @@ export const useHomeHook = () => {
   // ==================================================
   // Declarations ==================================================
   
-  const {SelectedItems, setSelectModeOn, setSelectedItems, AllNotes, UpdateData, SelectModeOn, setClickedId, ShowingNotes, setActiveScreen, setNoteStatus, setTitle, setNote, setShowingNotes} = useAppContext();
+  const {SelectedItems, setSelectModeOn, setSelectedItems, AllNotes, UpdateData, DeleteData, SelectModeOn, setClickedId, ShowingNotes, setActiveScreen, setNoteStatus, setTitle, setNote, setShowingNotes} = useAppContext();
 
   // ==================================================
   // ==================================================
@@ -66,17 +67,12 @@ export const useHomeHook = () => {
   // ==================================================
 
   const onDeletePress = async () => {
-    
-    const newArray = AllNotes.filter((item) => {
 
-      if(!SelectedItems.includes(item.id))
-      {
-        return item
-      }
+    const removeArray = AllNotes.filter(item => SelectedItems.includes(item.id))
+    const keepArray = AllNotes.filter(item => !SelectedItems.includes(item.id))
 
-    })
+    await DeleteData(removeArray, keepArray)
 
-    await UpdateData(newArray)
     setSelectedItems([])
     setSelectModeOn(false)
 

@@ -12,7 +12,7 @@ const UpdateAllNotesAPI = async (DataArray:DataObjectType[]) => {
 
    try
   {
-    const response = await axios.post(API_URL + "/update", {DataArray}, {timeout: 3000})
+    const response = await axios.post(API_URL + "/notes/update", {DataArray}, {timeout: 3000})
 
     const result = response.data
 
@@ -42,7 +42,7 @@ const GetAllNotesAPI = async () => {
 
   try
   {
-    const response = await axios.get(API_URL + "/get-all-notes");
+    const response = await axios.get(API_URL + "/notes/retrieve");
       
     const result = response.data
 
@@ -50,10 +50,15 @@ const GetAllNotesAPI = async () => {
   }
   catch(err)
   {
-    log("GetAllNotesAPI failed:", err);
+    log("GetAllNotesAPI failed" , err);
   }
 
 }
+
+// ==================================================
+// ==================================================
+
+
 
 // ==================================================
 // ==================================================
