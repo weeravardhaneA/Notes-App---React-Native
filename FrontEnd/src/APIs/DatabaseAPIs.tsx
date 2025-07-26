@@ -1,6 +1,7 @@
 import { API_URL } from "@env"
 import axios from "axios"
 import { DataObjectType } from "../Types/Types"
+import log from "../Helpers/log"
 
 
 // ==================================================
@@ -15,13 +16,20 @@ const UpdateAllNotesAPI = async (DataArray:DataObjectType[]) => {
 
     const result = response.data
 
-    console.log(result)
+    log(result)
 
-    return ("success")
+    if(response.status === 200 && result.message === "success")
+    {
+      return ("success")
+    }
+    else
+    {
+      return ("failed")
+    }
   }
   catch(err)
   {
-    console.log("Update Failed")
+    log("Update Failed" , err)
     
     return ("failed")
   }
@@ -38,11 +46,11 @@ const GetAllNotesAPI = async () => {
       
     const result = response.data
 
-    console.log(result)
+    log(result)
   }
   catch(err)
   {
-    console.error("GetAllNotesAPI failed:", err);
+    log("GetAllNotesAPI failed:", err);
   }
 
 }
