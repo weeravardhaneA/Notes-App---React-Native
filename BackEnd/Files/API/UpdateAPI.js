@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 
     await Promise.all(DataArray.map((item) => {
 
-      if(!item.title || !item.note)
+      if(!item.title)
       {
         throw new Error("Missing title or note");
       }

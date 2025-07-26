@@ -7,6 +7,7 @@ const ScreenWidth = Dimensions.get("window").width;
 type props = {
 
   onPress:()=>void,
+  disabled?:boolean
 
 }
 
@@ -17,6 +18,7 @@ type props = {
 const SaveButton = (
   {
     onPress,
+    disabled = false,
 
   }:props
   
@@ -25,8 +27,9 @@ const SaveButton = (
   return(
 
     <TouchableOpacity
-      style={s.b1}
+      style={[s.b1, {opacity: disabled ? 0.5 : 1}]}
       onPress={onPress}
+      disabled={disabled}
     >
     
       <Text style={s.t1}>Save</Text>

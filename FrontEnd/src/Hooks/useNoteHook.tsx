@@ -1,3 +1,4 @@
+import { Alert } from "react-native"
 import { useAppContext } from "./useAppContext"
 
 export const useNoteHook = () => {
@@ -23,20 +24,26 @@ export const useNoteHook = () => {
   // ==================================================
     
   const onSavePress = async () => {
+
+    if(!Title.trim()){return}
     
     if(NoteStatus=="update" && ClickedId)
     {
-      const newArray = AllNotes.map((item)=>{
-    
-        if(item.id==ClickedId)
-        {
-          return {...item, title: Title, note: Note}
-        }
-        return item
-      })
-    
-      await UpdateData(newArray)
-    
+      const currentNote = AllNotes.find((item) => item.id === ClickedId)
+
+      if(currentNote && (currentNote.title !== Title || currentNote.note !== Note))
+      {
+        const newArray = AllNotes.map((item)=>{
+      
+          if(item.id==ClickedId)
+          {
+            return {...item, title: Title, note: Note}
+          }
+          return item
+        })
+      
+        await UpdateData(newArray)
+      }
     }
     else if(NoteStatus=="insert")
     {
