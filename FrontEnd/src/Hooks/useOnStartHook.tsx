@@ -2,7 +2,7 @@ import RNFS from "react-native-fs"
 import { useAppContext } from "./useAppContext"
 
 
-export const OnStartHook = () => {
+export const useOnStartHook = () => {
   
   // ==================================================
   // Declarations ==================================================

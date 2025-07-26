@@ -5,7 +5,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const GetData = require("./Files/API/GetData")
-const UpdateAPI = require("./Files/API/UpdateAPI")
+const UpdateAPI = require("./Files/API/UpdateAPI");
+const log = require("./Files/Helpers/log");
 
 const Connect = async () => {
 
@@ -23,12 +24,12 @@ const Connect = async () => {
     app.use("/api/update", UpdateAPI);
 
     app.listen(process.env.PORT || 5000)
-    console.log("Connected");
+    log("Connected");
   }
   catch(err)
   {
-    console.log("Err :=== " + err);
-    console.log("Not Connected");
+    log("Err :=== " + err);
+    log("Not Connected");
   }
   
 }

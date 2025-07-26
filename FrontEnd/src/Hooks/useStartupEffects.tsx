@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import NetInfo from '@react-native-community/netinfo';
 import { useAppContext } from "./useAppContext";
-import { OnStartHook } from "./OnStartHook";
+import { useOnStartHook } from "./useOnStartHook";
 
 
 export const useStartupEffects = () => {
@@ -11,7 +11,7 @@ export const useStartupEffects = () => {
 
   const {setConnected, setShowingNotes, AllNotes, setAllNotes, setUnsyncedNotesExist} = useAppContext();
 
-  const {SyncNotesFromStorage} = OnStartHook();
+  const {SyncNotesFromStorage} = useOnStartHook();
 
   // ==================================================
   // ==================================================
