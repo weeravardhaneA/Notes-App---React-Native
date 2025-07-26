@@ -35,7 +35,7 @@ const NoteScreen = () => {
       <View style={s.v2}>
 
         <CancelButton onPress={onCancelPress}/>
-        <SaveButton onPress={onSavePress}/>
+        <SaveButton onPress={onSavePress} disabled={!Title.trim()}/>
 
       </View>
 
