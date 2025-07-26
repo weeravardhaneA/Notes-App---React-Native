@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import RNFS from "react-native-fs"
 import { AppContextType, AppProviderProps, DataObjectType } from "../Types/Types"
 import { UpdateAllNotesAPI } from '../APIs/DatabaseAPIs';
+import DeleteNotesAPI from '../APIs/DeleteNoteAPI';
 
 
 const AppContext = createContext<AppContextType>({} as AppContextType)
@@ -14,6 +15,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const FolderPath = RNFS.DocumentDirectoryPath
   const AllNotesFilePath = FolderPath + "/AllNotes.json"
   const UnsyncedNotesFilePath = FolderPath + "/UnsyncedNotes.json"
+  const ToDeleteFilePath = FolderPath + "/ToDelete.json"
 
   const [ActiveScreen, setActiveScreen] = useState("home")
   const [NoteStatus, setNoteStatus] = useState("")
@@ -72,6 +74,35 @@ export const AppProvider = ({children}:AppProviderProps) => {
 
   }
 
+
+  const DeleteData = async (removeArray:DataObjectType[], keepArray:DataObjectType[])=> {
+
+    if(Connected)
+    {
+      const result = await DeleteNotesAPI(removeArray)
+
+      if(result === "success")
+      {
+        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
+      }
+      else
+      {
+        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
+        await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
+        setUnsyncedNotesExist(true)
+      }
+    }
+    else
+    {
+      await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
+      await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
+      setUnsyncedNotesExist(true)
+    }
+
+    setAllNotes(keepArray)
+
+  }
+
   // ==================================================
   // ==================================================
 
@@ -107,6 +138,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
       UnsyncedNotesExist,
       setUnsyncedNotesExist,
       UpdateData,
+      DeleteData,
 
     }}>{children}</AppContext.Provider>
   )

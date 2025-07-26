@@ -3,10 +3,11 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-
-const GetData = require("./Files/API/GetData")
-const UpdateAPI = require("./Files/API/UpdateAPI");
 const log = require("./Files/Helpers/log");
+
+const GetNotesApi = require("./Files/API/GetNotesApi")
+const UpdateNotesAPI = require("./Files/API/UpdateNotesAPI");
+const DeleteNotesApi = require("./Files/API/DeleteNotesAPI")
 
 const Connect = async () => {
 
@@ -20,8 +21,9 @@ const Connect = async () => {
     }))
     app.use(express.json())
 
-    app.use("/api/get-data", GetData);
-    app.use("/api/update", UpdateAPI);
+    app.use("/api/notes/retrieve", GetNotesApi);
+    app.use("/api/notes/update", UpdateNotesAPI);
+    app.use("/api/notes/delete", DeleteNotesApi);
 
     app.listen(process.env.PORT || 5000)
     log("Connected");
