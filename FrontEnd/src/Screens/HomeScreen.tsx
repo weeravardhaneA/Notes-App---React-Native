@@ -15,7 +15,7 @@ const HomeScreen = () => {
   // ==================================================
   // Declarations ==================================================
 
-  const {SelectModeOn, AllNotes, ShowingNotes, Connected, setUnsyncedNotesExist,ToDeleteFileExists, ToUpdateFileExists} = useAppContext()
+  const {SelectModeOn, AllNotes, ShowingNotes, ToDeleteFileExists, ToUpdateFileExists} = useAppContext()
 
   const {CheckSelected, onDeletePress, onNotePress, onPlusPress, onNoteLongPress, onSearchTextChange} = useHomeHook();
 
@@ -39,7 +39,7 @@ const HomeScreen = () => {
       </View>
 
       <View>
-        { ToDeleteFileExists || ToUpdateFileExists ? <UnsyncedWarningBar isConnected={Connected} setUnsyncedNotesExist={setUnsyncedNotesExist}/> : null }
+        { ToDeleteFileExists || ToUpdateFileExists ? <UnsyncedWarningBar/> : null }
       </View>
   
       <View style={s.v3}>

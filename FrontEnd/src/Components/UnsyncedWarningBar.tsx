@@ -3,34 +3,19 @@ import RNFS from "react-native-fs"
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import { useState } from "react";
 import { useAppContext } from "../Hooks/useAppContext";
-
-// ==================================================
-// Types ==================================================
-
-type props = {
-
-  isConnected:boolean|null,
-  setUnsyncedNotesExist:(value:boolean)=>void,
-
-}
-
-// ==================================================
-// ==================================================
+import ReadFile from "../Helpers/ReadFile";
+import DeleteNotesAPI from "../APIs/DeleteNoteAPI";
+import log from "../Helpers/log";
 
 
-const UnsyncedWarningBar = (
-  {
-    isConnected,
-    setUnsyncedNotesExist
-  
-  }:props
-  
-) => {
+
+
+const UnsyncedWarningBar = () => {
 
   // ==================================================
   // Declarations ==================================================
 
-  const {AllNotesFilePath, UnsyncedNotesFilePath} = useAppContext();
+  const {Connected, ToDeleteFilePath, ToUpdateFilePath, setToDeleteFileExists, setToUpdateFileExists} = useAppContext();
 
   const [Loading, setLoading] = useState<boolean>(false)
 
@@ -47,51 +32,50 @@ const UnsyncedWarningBar = (
     {
       setLoading(true)
 
-      if(isConnected)
+      if(Connected)
       {
-        const FileExists = await RNFS.exists(UnsyncedNotesFilePath)
+        const ToDeleteArray = await ReadFile(ToDeleteFilePath)
+        const ToUpdateArray = await ReadFile(ToUpdateFilePath)
 
-        if(FileExists)
+        if(ToUpdateArray)
         {
-          const AllNotesStat = await RNFS.stat(AllNotesFilePath)
-          const UnsyncedNotesStat = await RNFS.stat(UnsyncedNotesFilePath)
+          const result = await UpdateNotesAPI(ToUpdateArray)
 
-          if(UnsyncedNotesStat.mtime > AllNotesStat.mtime)
+          if(result === "success")
           {
-            const JsonData = await RNFS.readFile(UnsyncedNotesFilePath)
-            const data = JSON.parse(JsonData)
-            
-            const result = await UpdateNotesAPI(data)
-
-            if(result === "success")
-            {
-              await RNFS.unlink(UnsyncedNotesFilePath)
-              setUnsyncedNotesExist(false)
-            }
-            else
-            {
-              setUnsyncedNotesExist(true)
-            }
-
+            await RNFS.unlink(ToUpdateFilePath)
+            setToUpdateFileExists(false)
           }
           else
           {
-            await RNFS.unlink(UnsyncedNotesFilePath)
+            setToUpdateFileExists(true)
           }
         }
-        else
+        
+        if(ToDeleteArray)
         {
-          setUnsyncedNotesExist(false)
+          const result = await DeleteNotesAPI(ToDeleteArray)
+
+          if(result === "success")
+          {
+            await RNFS.unlink(ToDeleteFilePath)
+            setToDeleteFileExists(false)
+          }
+          else
+          {
+            setToDeleteFileExists(true)
+          }
         }
+
       }
       else
       {
-        Alert.alert("Sync Failed", "Internet Connection required to sync")
+        Alert.alert("Sync Failed", "Internet connection is required to sync.")
       }
     }
     catch(err)
     {
-      Alert.alert("Error", "Sync Failed")
+      log("Sync failed", err)
     }
     finally
     {

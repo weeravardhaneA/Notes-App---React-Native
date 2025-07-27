@@ -1,11 +1,14 @@
 import { useAppContext } from "./useAppContext"
+import { useSharedHook } from "./useSharedHook";
 
 export const useNoteHook = () => {
 
   // ==================================================
   // Declarations ==================================================
 
-  const {setActiveScreen, setNoteStatus, setTitle, setNote, NoteStatus, ClickedId, AllNotes, Title, Note, UpdateData} = useAppContext()
+  const {setActiveScreen, setNoteStatus, setTitle, setNote, NoteStatus, ClickedId, AllNotes, Title, Note} = useAppContext();
+
+  const {UpdateData} = useSharedHook();
 
   // ==================================================
   // ==================================================

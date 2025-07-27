@@ -1,13 +1,15 @@
-import { DeleteNotesAPI } from "../APIs/DatabaseAPIs";
 import { DataObjectType } from "../Types/Types";
 import { useAppContext } from "./useAppContext"
+import { useSharedHook } from "./useSharedHook";
 
 export const useHomeHook = () => {
 
   // ==================================================
   // Declarations ==================================================
   
-  const {SelectedItems, setSelectModeOn, setSelectedItems, AllNotes, UpdateData, DeleteData, SelectModeOn, setClickedId, ShowingNotes, setActiveScreen, setNoteStatus, setTitle, setNote, setShowingNotes} = useAppContext();
+  const {SelectedItems, setSelectModeOn, setSelectedItems, AllNotes, SelectModeOn, setClickedId, ShowingNotes, setActiveScreen, setNoteStatus, setTitle, setNote, setShowingNotes} = useAppContext();
+
+  const {DeleteData} = useSharedHook();
 
   // ==================================================
   // ==================================================
