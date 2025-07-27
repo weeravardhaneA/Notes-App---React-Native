@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import RNFS from "react-native-fs"
 import { AppContextType, AppProviderProps, DataObjectType } from "../Types/Types"
-import { UpdateAllNotesAPI } from '../APIs/DatabaseAPIs';
+import UpdateNotesAPI from '../APIs/UpdateNotesAPI';
 import DeleteNotesAPI from '../APIs/DeleteNoteAPI';
 import ReadFile from '../Helpers/ReadFile';
 import log from '../Helpers/log';
@@ -19,6 +19,9 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const UnsyncedNotesFilePath = FolderPath + "/UnsyncedNotes.json"
   const ToDeleteFilePath = FolderPath + "/ToDelete.json"
   const ToUpdateFilePath = FolderPath + "/ToUpdate.json"
+
+  const [ToDeleteFileExists, setToDeleteFileExists] = useState<boolean>(false)
+  const [ToUpdateFileExists, setToUpdateFileExists] = useState<boolean>(false)
 
   const [ActiveScreen, setActiveScreen] = useState("home")
   const [NoteStatus, setNoteStatus] = useState("")
@@ -58,7 +61,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
       
       if(Connected)
       {
-        const result = await UpdateAllNotesAPI(updatedArray)
+        const result = await UpdateNotesAPI(updatedArray)
   
         if(result === "success")
         {
@@ -67,8 +70,16 @@ export const AppProvider = ({children}:AppProviderProps) => {
         else
         {
           const ToUpdateArray = await ReadFile(ToUpdateFilePath)
-          const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
-          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+
+          if(ToUpdateArray)
+          {
+            const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
+            await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+          }
+          else
+          {
+            await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(updatedNote), "utf8")
+          }
   
           setUnsyncedNotesExist(true)
         }
@@ -76,8 +87,16 @@ export const AppProvider = ({children}:AppProviderProps) => {
       else
       {
         const ToUpdateArray = await ReadFile(ToUpdateFilePath)
-        const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
-        await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+
+        if(ToUpdateArray)
+        {
+          const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
+          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+        }
+        else
+        {
+          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(updatedNote), "utf8")
+        }
   
         setUnsyncedNotesExist(true)
       }
@@ -141,6 +160,12 @@ export const AppProvider = ({children}:AppProviderProps) => {
       FolderPath,
       AllNotesFilePath,
       UnsyncedNotesFilePath,
+      ToDeleteFilePath,
+      ToUpdateFilePath,
+      ToDeleteFileExists,
+      setToDeleteFileExists,
+      ToUpdateFileExists,
+      setToUpdateFileExists,
       ActiveScreen,
       setActiveScreen,
       NoteStatus,

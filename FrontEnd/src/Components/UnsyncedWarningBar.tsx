@@ -1,6 +1,6 @@
 import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import RNFS from "react-native-fs"
-import {UpdateAllNotesAPI} from "../APIs/DatabaseAPIs"
+import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import { useState } from "react";
 import { useAppContext } from "../Hooks/useAppContext";
 
@@ -61,7 +61,7 @@ const UnsyncedWarningBar = (
             const JsonData = await RNFS.readFile(UnsyncedNotesFilePath)
             const data = JSON.parse(JsonData)
             
-            const result = await UpdateAllNotesAPI(data)
+            const result = await UpdateNotesAPI(data)
 
             if(result === "success")
             {
