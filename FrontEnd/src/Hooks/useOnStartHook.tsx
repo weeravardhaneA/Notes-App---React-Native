@@ -55,6 +55,21 @@ export const useOnStartHook = () => {
 
       if(Connected)
       {
+
+        if(ToUpdateArray)
+        {
+          const result = await UpdateNotesAPI(ToUpdateArray)
+    
+          if(result === "success")
+          {
+            await RNFS.unlink(ToUpdateFilePath)
+            setToUpdateFileExists(false)
+          }
+          else
+          {
+            setToUpdateFileExists(true)
+          }
+        }
         
         if(ToDeleteArray)
         {
@@ -68,21 +83,6 @@ export const useOnStartHook = () => {
           else
           {
             setToDeleteFileExists(true)
-          }
-        }
-      
-        if(ToUpdateArray)
-        {
-          const result = await UpdateNotesAPI(ToUpdateArray)
-    
-          if(result === "success")
-          {
-            await RNFS.unlink(ToUpdateFilePath)
-            setToUpdateFileExists(false)
-          }
-          else
-          {
-            setToUpdateFileExists(true)
           }
         }
     

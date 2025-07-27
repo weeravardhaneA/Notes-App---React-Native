@@ -50,104 +50,6 @@ export const AppProvider = ({children}:AppProviderProps) => {
   // ==================================================
   // ==================================================
 
-
-  // ==================================================
-  // Shared Functions ==================================================
-
-  const UpdateData = async (updatedArray:DataObjectType[], updatedNote:DataObjectType[]) => {
-
-    try
-    {
-      
-      if(Connected)
-      {
-        const result = await UpdateNotesAPI(updatedArray)
-  
-        if(result === "success")
-        {
-          // no action needed 
-        }
-        else
-        {
-          const ToUpdateArray = await ReadFile(ToUpdateFilePath)
-
-          if(ToUpdateArray)
-          {
-            const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
-            await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
-          }
-          else
-          {
-            await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(updatedNote), "utf8")
-          }
-  
-          setUnsyncedNotesExist(true)
-        }
-      }
-      else
-      {
-        const ToUpdateArray = await ReadFile(ToUpdateFilePath)
-
-        if(ToUpdateArray)
-        {
-          const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
-          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
-        }
-        else
-        {
-          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(updatedNote), "utf8")
-        }
-  
-        setUnsyncedNotesExist(true)
-      }
-      
-      await RNFS.writeFile(AllNotesFilePath, JSON.stringify(updatedArray), "utf8")
-
-      setAllNotes(updatedArray)
-    }
-    catch(err)
-    {
-      log("UpdateData failed:", err)
-    }
-
-  }
-
-
-  const DeleteData = async (removeArray:DataObjectType[], keepArray:DataObjectType[])=> {
-
-    try
-    {
-      if(Connected)
-      {
-        const result = await DeleteNotesAPI(removeArray)
-  
-        if(result === "success")
-        {
-          // no action needed
-        }
-        else
-        {
-          await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
-          setUnsyncedNotesExist(true)
-        }
-      }
-      else
-      {
-        await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
-        setUnsyncedNotesExist(true)
-      }
-  
-      await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
-  
-      setAllNotes(keepArray)
-    }
-    catch(err)
-    {
-      log("DeleteData failed", err)
-    }
-
-  }
-
   // ==================================================
   // ==================================================
 
@@ -188,8 +90,8 @@ export const AppProvider = ({children}:AppProviderProps) => {
       setConnected,
       UnsyncedNotesExist,
       setUnsyncedNotesExist,
-      UpdateData,
-      DeleteData,
+      // UpdateData,
+      // DeleteData,
 
     }}>{children}</AppContext.Provider>
   )
