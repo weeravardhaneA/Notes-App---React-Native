@@ -1,5 +1,9 @@
 import RNFS from "react-native-fs"
 import { useAppContext } from "./useAppContext"
+import ReadFile from "../Helpers/ReadFile";
+import DeleteNotesAPI from "../APIs/DeleteNoteAPI";
+import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
+import log from "../Helpers/log";
 
 
 export const useOnStartHook = () => {
@@ -7,112 +11,103 @@ export const useOnStartHook = () => {
   // ==================================================
   // Declarations ==================================================
 
-  const {AllNotesFilePath, UnsyncedNotesFilePath, setUnsyncedNotesExist, setAllNotes} = useAppContext();
+  const {AllNotesFilePath, setAllNotes, ToDeleteFilePath, ToUpdateFilePath, setToDeleteFileExists, setToUpdateFileExists, Connected} = useAppContext();
 
   // ==================================================
   // ==================================================
-  
-  const ReadFile = async (filePath:string) => {
-  
-    const fileExist = await RNFS.exists(filePath)
-  
-    if(fileExist)
-    {
-      const fileContent = await RNFS.readFile(filePath)
-      const data = JSON.parse(fileContent)
-  
-      return data;
-    }
-    else
-    {
-      return false;
-    }
-  }
+
   
   // ==================================================
   // ==================================================
   
   const SyncNotesFromStorage = async () => {
-  
-  
-    // ==================================================
-    // Reusable Functions ==================================================
-  
-    const fileExist = await RNFS.exists(UnsyncedNotesFilePath)
-    
-    if(fileExist)
-    {
-      setUnsyncedNotesExist(true)
-    }
-    else
-    {
-      setUnsyncedNotesExist(false)
-    }
-    
-    // ==================================================
-    // ==================================================
-  
-    // ==================================================
-    // File System ==================================================
-  
+
     try
     {
-      const UnsyncedNotesFileExist = await RNFS.exists(UnsyncedNotesFilePath)
-      const AllNotesFileExist = await RNFS.exists(AllNotesFilePath)
-  
-      if(UnsyncedNotesFileExist && AllNotesFileExist)
+      const NotesArray = await ReadFile(AllNotesFilePath)
+
+      if(NotesArray)
       {
-        const AllNotesStat = await RNFS.stat(AllNotesFilePath)
-        const UnsyncedNotesStat = await RNFS.stat(UnsyncedNotesFilePath)
-  
-        if(UnsyncedNotesStat.mtime > AllNotesStat.mtime)
-        {
-          const data = await ReadFile(UnsyncedNotesFilePath)
-          setAllNotes(data)
-        }
-        else
-        {
-          const data = await ReadFile(AllNotesFilePath)
-          if(data)
-          {
-            setAllNotes(data)
-          }
-          else
-          {
-            await RNFS.writeFile(AllNotesFilePath, JSON.stringify([]), "utf8")
-            setAllNotes([])
-          }
-        }
+        setAllNotes(NotesArray)
       }
-      else if(AllNotesFileExist && !UnsyncedNotesFileExist)
+      else
       {
-    
-        const data = await ReadFile(AllNotesFilePath)
-        setAllNotes(data)
-      }
-      else if(!AllNotesFileExist && UnsyncedNotesFileExist)
-      {
-        const data = await ReadFile(UnsyncedNotesFilePath)
-        setAllNotes(data)
-      }
-      else {
-        await RNFS.writeFile(AllNotesFilePath, JSON.stringify([]), "utf8");
-        setAllNotes([]);
+        setAllNotes([])
       }
   
     }
     catch(err)
     {
-      console.log(`File System Error : ${err}`)
+      console.log("File System Error", err)
     }
-  
-    // ==================================================
-    // ==================================================
 
   }
 
+  // ==================================================
+  // ==================================================
+
+  const SyncPendingChanges  = async () => {
+
+    try
+    {
+      const ToDeleteArray = await ReadFile(ToDeleteFilePath)
+      const ToUpdateArray = await ReadFile(ToUpdateFilePath)
+
+      if(Connected)
+      {
+        
+        if(ToDeleteArray)
+        {
+          const result = await DeleteNotesAPI(ToDeleteArray)
+    
+          if(result === "success")
+          {
+            await RNFS.unlink(ToDeleteFilePath)
+            setToDeleteFileExists(false)
+          }
+          else
+          {
+            setToDeleteFileExists(true)
+          }
+        }
+      
+        if(ToUpdateArray)
+        {
+          const result = await UpdateNotesAPI(ToUpdateArray)
+    
+          if(result === "success")
+          {
+            await RNFS.unlink(ToUpdateFilePath)
+            setToUpdateFileExists(false)
+          }
+          else
+          {
+            setToUpdateFileExists(true)
+          }
+        }
+    
+      }
+      else
+      {
+        if(ToDeleteArray) {setToDeleteFileExists(true)}
+        if(ToUpdateArray) {setToUpdateFileExists(true)}
+      }
+
+    }
+    catch(err)
+    {
+      log("SyncToDeleteAndToUpdate failed", err)
+    }
+
+  }
+
+  // ==================================================
+  // ==================================================
+
+
   return{
-    SyncNotesFromStorage
+    SyncNotesFromStorage,
+    SyncPendingChanges,
   }
 
 }

@@ -14,12 +14,12 @@ const ReadFile = async (filePath:string) => {
     }
     else
     {
-      return [];
+      return false;
     }
   }
   catch(err)
   {
-    return [];
+    return false;
   }
 
 }

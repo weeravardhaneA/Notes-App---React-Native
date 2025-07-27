@@ -9,9 +9,9 @@ export const useStartupEffects = () => {
   // ==================================================
   // Declarations ==================================================
 
-  const {setConnected, setShowingNotes, AllNotes, setAllNotes, setUnsyncedNotesExist} = useAppContext();
+  const {setConnected, setShowingNotes, AllNotes} = useAppContext();
 
-  const {SyncNotesFromStorage} = useOnStartHook();
+  const {SyncNotesFromStorage, SyncPendingChanges} = useOnStartHook();
 
   // ==================================================
   // ==================================================
@@ -53,6 +53,7 @@ export const useStartupEffects = () => {
     (async() => {
       
       await SyncNotesFromStorage();
+      await SyncPendingChanges();
       
     })()
     

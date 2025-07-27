@@ -18,6 +18,12 @@ export type AppContextType = {
   FolderPath: string;
   AllNotesFilePath: string;
   UnsyncedNotesFilePath: string;
+  ToDeleteFilePath:string,
+  ToUpdateFilePath:string,
+  ToDeleteFileExists: boolean,
+  setToDeleteFileExists: (value:boolean) => void,
+  ToUpdateFileExists: boolean,
+  setToUpdateFileExists: (value:boolean) => void,
   ActiveScreen: string;
   setActiveScreen: (value: string) => void;
   NoteStatus: string;
