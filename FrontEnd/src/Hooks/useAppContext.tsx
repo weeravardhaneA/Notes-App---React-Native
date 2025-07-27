@@ -3,6 +3,8 @@ import RNFS from "react-native-fs"
 import { AppContextType, AppProviderProps, DataObjectType } from "../Types/Types"
 import { UpdateAllNotesAPI } from '../APIs/DatabaseAPIs';
 import DeleteNotesAPI from '../APIs/DeleteNoteAPI';
+import ReadFile from '../Helpers/ReadFile';
+import log from '../Helpers/log';
 
 
 const AppContext = createContext<AppContextType>({} as AppContextType)
@@ -16,6 +18,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const AllNotesFilePath = FolderPath + "/AllNotes.json"
   const UnsyncedNotesFilePath = FolderPath + "/UnsyncedNotes.json"
   const ToDeleteFilePath = FolderPath + "/ToDelete.json"
+  const ToUpdateFilePath = FolderPath + "/ToUpdate.json"
 
   const [ActiveScreen, setActiveScreen] = useState("home")
   const [NoteStatus, setNoteStatus] = useState("")
@@ -48,58 +51,81 @@ export const AppProvider = ({children}:AppProviderProps) => {
   // ==================================================
   // Shared Functions ==================================================
 
-  const UpdateData = async (data:DataObjectType[]) => {
+  const UpdateData = async (updatedArray:DataObjectType[], updatedNote:DataObjectType[]) => {
 
-    if(Connected)
+    try
     {
-      const result = await UpdateAllNotesAPI(data)
-
-      if(result === "success")
+      
+      if(Connected)
       {
-        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(data), "utf8")
+        const result = await UpdateAllNotesAPI(updatedArray)
+  
+        if(result === "success")
+        {
+          // no action needed 
+        }
+        else
+        {
+          const ToUpdateArray = await ReadFile(ToUpdateFilePath)
+          const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
+          await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+  
+          setUnsyncedNotesExist(true)
+        }
       }
       else
       {
-        await RNFS.writeFile(UnsyncedNotesFilePath, JSON.stringify(data), "utf8")
+        const ToUpdateArray = await ReadFile(ToUpdateFilePath)
+        const newToUpdateArray = [...ToUpdateArray, ...updatedNote]
+        await RNFS.writeFile(ToUpdateFilePath, JSON.stringify(newToUpdateArray), "utf8")
+  
         setUnsyncedNotesExist(true)
       }
-    }
-    else
-    {
-      await RNFS.writeFile(UnsyncedNotesFilePath, JSON.stringify(data), "utf8")
-      setUnsyncedNotesExist(true)
-    }
+      
+      await RNFS.writeFile(AllNotesFilePath, JSON.stringify(updatedArray), "utf8")
 
-    setAllNotes(data)
+      setAllNotes(updatedArray)
+    }
+    catch(err)
+    {
+      log("UpdateData failed:", err)
+    }
 
   }
 
 
   const DeleteData = async (removeArray:DataObjectType[], keepArray:DataObjectType[])=> {
 
-    if(Connected)
+    try
     {
-      const result = await DeleteNotesAPI(removeArray)
-
-      if(result === "success")
+      if(Connected)
       {
-        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
+        const result = await DeleteNotesAPI(removeArray)
+  
+        if(result === "success")
+        {
+          // no action needed
+        }
+        else
+        {
+          await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
+          setUnsyncedNotesExist(true)
+        }
       }
       else
       {
-        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
         await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
         setUnsyncedNotesExist(true)
       }
-    }
-    else
-    {
+  
       await RNFS.writeFile(AllNotesFilePath, JSON.stringify(keepArray), "utf8")
-      await RNFS.writeFile(ToDeleteFilePath, JSON.stringify(removeArray), "utf8")
-      setUnsyncedNotesExist(true)
+  
+      setAllNotes(keepArray)
     }
-
-    setAllNotes(keepArray)
+    catch(err)
+    {
+      log("DeleteData failed", err)
+    }
 
   }
 
