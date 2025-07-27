@@ -40,7 +40,7 @@ export type AppContextType = {
   setConnected: (value: boolean | null) => void;
   UnsyncedNotesExist: boolean;
   setUnsyncedNotesExist: (value: boolean) => void;
-  UpdateData:(value:DataObjectType[]) => void,
+  UpdateData:(value1:DataObjectType[], value2:DataObjectType[], ) => void,
   DeleteData:(value1:DataObjectType[], value2:DataObjectType[]) => void,
 };
 

@@ -1,4 +1,3 @@
-import { Alert } from "react-native"
 import { useAppContext } from "./useAppContext"
 
 export const useNoteHook = () => {
@@ -33,7 +32,7 @@ export const useNoteHook = () => {
 
       if(currentNote && (currentNote.title !== Title || currentNote.note !== Note))
       {
-        const newArray = AllNotes.map((item)=>{
+        const updatedArray = AllNotes.map((item)=>{
       
           if(item.id==ClickedId)
           {
@@ -41,8 +40,10 @@ export const useNoteHook = () => {
           }
           return item
         })
+
+        const updatedNote = updatedArray.filter(item => item.id === ClickedId)
       
-        await UpdateData(newArray)
+        await UpdateData(updatedArray, updatedNote)
       }
     }
     else if(NoteStatus=="insert")
@@ -58,8 +59,9 @@ export const useNoteHook = () => {
       }
 
       const newArray = [...AllNotes, {id: newId, title: Title, note: Note}]
+      const newNote = [{id: newId, title: Title, note: Note}]
     
-      await UpdateData(newArray)
+      await UpdateData(newArray, newNote)
     }
     
     setActiveScreen("home")
