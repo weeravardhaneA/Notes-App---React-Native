@@ -1,10 +1,10 @@
 const express = require("express");
-const UpdateOne = require("../Functions/UpdateOne");
+const UpdateOne = require("../Utils/UpdateOne");
 const router = express.Router()
 
 
-const AllNotesCollection = require("../Collections/AllNotesCollection");
-const log = require("../Helpers/log");
+const AllNotesCollection = require("../Models/AllNotesModel");
+const log = require("../Utils/log");
 
 
 

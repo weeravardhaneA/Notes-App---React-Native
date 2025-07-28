@@ -1,9 +1,9 @@
 import { Dimensions, FlatList, SafeAreaView, StyleSheet, View } from "react-native"
-import SearchBox from "../Components/SearchBox"
+import SearchBox from "../Components/InputFields/SearchBox"
 import NoteCard from "../Components/NoteCard"
 import { useHomeHook } from "../Hooks/useHomeHook";
-import DeleteButton from "../Components/DeleteButton";
-import AddButton from "../Components/AddButton";
+import DeleteButton from "../Components/Buttons/DeleteButton";
+import AddButton from "../Components/Buttons/AddButton";
 import UnsyncedWarningBar from "../Components/UnsyncedWarningBar";
 import { useAppContext } from "../Hooks/useAppContext";
 

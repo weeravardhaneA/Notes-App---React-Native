@@ -1,9 +1,9 @@
 import RNFS from "react-native-fs"
 import { useAppContext } from "./useAppContext"
-import ReadFile from "../Helpers/ReadFile";
+import ReadFile from "../Utils/ReadFile";
 import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
-import log from "../Helpers/log";
+import log from "../Utils/log";
 import RetrieveNotesAPI from "../APIs/RetrieveNotesAPI";
 
 
@@ -41,7 +41,7 @@ export const useOnStartHook = () => {
 
       const result = await RetrieveNotesAPI();
 
-      if(result)
+      if(Array.isArray(result))
       {
         await RNFS.writeFile(AllNotesFilePath, JSON.stringify(result), "utf8")
         setAllNotes(result)

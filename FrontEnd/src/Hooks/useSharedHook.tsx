@@ -1,7 +1,7 @@
 import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
-import log from "../Helpers/log";
-import ReadFile from "../Helpers/ReadFile";
+import log from "../Utils/log";
+import ReadFile from "../Utils/ReadFile";
 import { DataObjectType } from "../Types/Types"
 import { useAppContext } from "./useAppContext"
 import RNFS from "react-native-fs"

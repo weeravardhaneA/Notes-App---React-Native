@@ -1,6 +1,6 @@
 import { API_URL } from "@env";
 import axios from "axios";
-import log from "../Helpers/log";
+import log from "../Utils/log";
 
 const RetrieveNotesAPI = async () => {
 

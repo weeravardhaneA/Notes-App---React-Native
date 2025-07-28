@@ -1,6 +1,6 @@
 const express = require("express");
-const RetrieveAll = require("../Functions/RetrieveAll");
-const AllNotesCollection = require("../Collections/AllNotesCollection");
+const RetrieveAll = require("../Utils/RetrieveAll");
+const AllNotesCollection = require("../Models/AllNotesModel");
 const router = express.Router()
 
 router.get("/", async (req, res) => {

@@ -3,9 +3,9 @@ import RNFS from "react-native-fs"
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import { useState } from "react";
 import { useAppContext } from "../Hooks/useAppContext";
-import ReadFile from "../Helpers/ReadFile";
+import ReadFile from "../Utils/ReadFile";
 import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
-import log from "../Helpers/log";
+import log from "../Utils/log";
 
 
 
