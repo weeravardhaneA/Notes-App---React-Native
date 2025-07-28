@@ -1,9 +1,10 @@
 import RNFS from "react-native-fs"
 import { useAppContext } from "./useAppContext"
 import ReadFile from "../Helpers/ReadFile";
-import DeleteNotesAPI from "../APIs/DeleteNoteAPI";
+import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import log from "../Helpers/log";
+import RetrieveNotesAPI from "../APIs/RetrieveNotesAPI";
 
 
 export const useOnStartHook = () => {
@@ -29,12 +30,27 @@ export const useOnStartHook = () => {
       if(NotesArray)
       {
         setAllNotes(NotesArray)
+        return;
+      }
+      
+      if(!Connected)
+      {
+        setAllNotes([])
+        return;
+      }
+
+      const result = await RetrieveNotesAPI();
+
+      if(result)
+      {
+        await RNFS.writeFile(AllNotesFilePath, JSON.stringify(result), "utf8")
+        setAllNotes(result)
       }
       else
       {
         setAllNotes([])
       }
-  
+
     }
     catch(err)
     {
@@ -60,7 +76,7 @@ export const useOnStartHook = () => {
         {
           const result = await UpdateNotesAPI(ToUpdateArray)
     
-          if(result === "success")
+          if(result)
           {
             await RNFS.unlink(ToUpdateFilePath)
             setToUpdateFileExists(false)
@@ -75,7 +91,7 @@ export const useOnStartHook = () => {
         {
           const result = await DeleteNotesAPI(ToDeleteArray)
     
-          if(result === "success")
+          if(result)
           {
             await RNFS.unlink(ToDeleteFilePath)
             setToDeleteFileExists(false)

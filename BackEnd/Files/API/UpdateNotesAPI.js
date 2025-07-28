@@ -12,7 +12,6 @@ router.post("/", async (req, res) => {
 
   try
   {
-    log(1)
 
     const {DataArray} = req.body;
 
@@ -23,8 +22,6 @@ router.post("/", async (req, res) => {
       return res.status(400).json({message: "invalid data"})
     }
 
-    log(2)
-
     await Promise.all(DataArray.map(async (item) => {
 
       if(!item.title)
@@ -32,15 +29,11 @@ router.post("/", async (req, res) => {
         throw new Error("Missing title or note");
       }
 
-      log(3)
-
       const filter = {id: item.id}
       const fieldsToUpdate = {$set: {title: item.title, note: item.note}}
       return UpdateOne(AllNotesCollection, filter, fieldsToUpdate)
 
     }))
-
-    log(4)
 
     return res.status(200).json({message: "success"})
   }

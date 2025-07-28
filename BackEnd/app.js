@@ -5,9 +5,9 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const log = require("./Files/Helpers/log");
 
-const GetNotesApi = require("./Files/API/GetNotesApi")
+const RetrieveNotesAPI = require("./Files/API/RetrieveNotesAPI");
 const UpdateNotesAPI = require("./Files/API/UpdateNotesAPI");
-const DeleteNotesApi = require("./Files/API/DeleteNotesAPI")
+const DeleteNotesApi = require("./Files/API/DeleteNotesAPI");
 
 const Connect = async () => {
 
@@ -21,7 +21,7 @@ const Connect = async () => {
     }))
     app.use(express.json())
 
-    app.use("/api/notes/retrieve", GetNotesApi);
+    app.use("/api/notes/retrieve", RetrieveNotesAPI);
     app.use("/api/notes/update", UpdateNotesAPI);
     app.use("/api/notes/delete", DeleteNotesApi);
 

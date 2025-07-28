@@ -1,4 +1,4 @@
-import DeleteNotesAPI from "../APIs/DeleteNoteAPI";
+import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import log from "../Helpers/log";
 import ReadFile from "../Helpers/ReadFile";
@@ -25,7 +25,7 @@ export const useSharedHook = () => {
       {
         const result = await UpdateNotesAPI(updatedArray)
   
-        if(result === "success")
+        if(result)
         {
           // no action needed 
         }
@@ -85,7 +85,7 @@ export const useSharedHook = () => {
       {
         const result = await DeleteNotesAPI(removeArray)
   
-        if(result === "success")
+        if(result)
         {
           // no action needed
         }
