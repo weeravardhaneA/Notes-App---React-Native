@@ -1,9 +1,9 @@
 const express = require("express");
-const DeleteOne = require("../Functions/DeleteOne");
+const DeleteOne = require("../Utils/DeleteOne");
 const router = express.Router();
 
-const AllNotesCollection = require("../Collections/AllNotesCollection");
-const log = require("../Helpers/log");
+const AllNotesCollection = require("../Models/AllNotesModel");
+const log = require("../Utils/log");
 
 
 router.post("/", async (req, res) => {

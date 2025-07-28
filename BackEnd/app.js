@@ -3,11 +3,11 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const log = require("./Files/Helpers/log");
+const log = require("./src/Utils/log");
 
-const RetrieveNotesAPI = require("./Files/API/RetrieveNotesAPI");
-const UpdateNotesAPI = require("./Files/API/UpdateNotesAPI");
-const DeleteNotesApi = require("./Files/API/DeleteNotesAPI");
+const RetrieveNotesAPI = require("./src/APIs/RetrieveNotesAPI");
+const UpdateNotesAPI = require("./src/APIs/UpdateNotesAPI");
+const DeleteNotesApi = require("./src/APIs/DeleteNotesAPI");
 
 const Connect = async () => {
 

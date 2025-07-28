@@ -1,7 +1,7 @@
 import { API_URL } from "@env"
 import axios from "axios"
 import { DataObjectType } from "../Types/Types"
-import log from "../Helpers/log"
+import log from "../Utils/log"
 
 const DeleteNotesAPI = async (DataArray:DataObjectType[]) => {
 

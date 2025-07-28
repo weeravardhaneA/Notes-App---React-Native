@@ -1,4 +1,4 @@
-const log = require("../Helpers/log")
+const log = require("./log");
 
 const UpdateOne = async (collection, filter, fieldsToUpdate) => {
 

@@ -1,9 +1,9 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import NotePageHeader from "../Components/NotePageHeader";
-import TitleInput from "../Components/TitleInput";
-import NoteInput from "../Components/NoteInput";
-import CancelButton from "../Components/CancelButton";
-import SaveButton from "../Components/SaveButton";
+import TitleInput from "../Components/InputFields/TitleInput";
+import NoteInput from "../Components/InputFields/NoteInput";
+import CancelButton from "../Components/Buttons/CancelButton";
+import SaveButton from "../Components/Buttons/SaveButton";
 import { useNoteHook } from "../Hooks/useNoteHook";
 import { useAppContext } from "../Hooks/useAppContext";
 
