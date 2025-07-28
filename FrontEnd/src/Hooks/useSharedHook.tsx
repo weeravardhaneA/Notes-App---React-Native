@@ -23,7 +23,7 @@ export const useSharedHook = () => {
       
       if(Connected)
       {
-        const result = await UpdateNotesAPI(updatedArray)
+        const result = await UpdateNotesAPI(updatedNote)
   
         if(result)
         {
