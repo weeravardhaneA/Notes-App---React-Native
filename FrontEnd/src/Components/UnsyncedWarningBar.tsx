@@ -4,7 +4,7 @@ import UpdateNotesAPI from "../APIs/UpdateNotesAPI";
 import { useState } from "react";
 import { useAppContext } from "../Hooks/useAppContext";
 import ReadFile from "../Helpers/ReadFile";
-import DeleteNotesAPI from "../APIs/DeleteNoteAPI";
+import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import log from "../Helpers/log";
 
 
@@ -41,7 +41,7 @@ const UnsyncedWarningBar = () => {
         {
           const result = await UpdateNotesAPI(ToUpdateArray)
 
-          if(result === "success")
+          if(result)
           {
             await RNFS.unlink(ToUpdateFilePath)
             setToUpdateFileExists(false)
@@ -56,7 +56,7 @@ const UnsyncedWarningBar = () => {
         {
           const result = await DeleteNotesAPI(ToDeleteArray)
 
-          if(result === "success")
+          if(result)
           {
             await RNFS.unlink(ToDeleteFilePath)
             setToDeleteFileExists(false)

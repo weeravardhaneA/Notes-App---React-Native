@@ -1,10 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import RNFS from "react-native-fs"
 import { AppContextType, AppProviderProps, DataObjectType } from "../Types/Types"
-import UpdateNotesAPI from '../APIs/UpdateNotesAPI';
-import DeleteNotesAPI from '../APIs/DeleteNoteAPI';
-import ReadFile from '../Helpers/ReadFile';
-import log from '../Helpers/log';
 
 
 const AppContext = createContext<AppContextType>({} as AppContextType)

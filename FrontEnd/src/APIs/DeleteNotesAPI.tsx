@@ -15,18 +15,18 @@ const DeleteNotesAPI = async (DataArray:DataObjectType[]) => {
 
     if(response.status === 200 && result.message === "success")
     {
-      return("success")
+      return true;
     }
     else
     {
-      return("failed")
+      return false;
     }
 
   }
   catch(err)
   {
-    log("Delete Failed" , err)
-    return("failed")
+    log("DeleteNotesAPI Failed" , err)
+    return false;
   }
 }
 

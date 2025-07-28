@@ -15,18 +15,18 @@ const UpdateNotesAPI = async (DataArray:DataObjectType[]) => {
 
     if(response.status === 200 && result.message === "success")
     {
-      return ("success")
+      return true;
     }
     else
     {
-      return ("failed")
+      return false;
     }
   }
   catch(err)
   {
-    log("Update Failed" , err)
+    log("UpdateNotesAPI Failed" , err)
     
-    return ("failed")
+    return false;
   }
 }
 
