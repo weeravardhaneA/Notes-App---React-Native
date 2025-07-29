@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
+import c from "../../Utils/Colors";
 const ScreenWidth = Dimensions.get("window").width;
 
 // ==================================================
@@ -44,11 +45,11 @@ const s = StyleSheet.create({
     height: "75%",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "#fbbf24",
+    borderColor: c.c3,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fef3c7",
-    shadowColor: "#fbbf24",
+    backgroundColor: c.c4,
+    shadowColor: c.c3,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,

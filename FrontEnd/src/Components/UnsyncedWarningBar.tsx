@@ -6,6 +6,7 @@ import { useAppContext } from "../Hooks/useAppContext";
 import ReadFile from "../Utils/ReadFile";
 import DeleteNotesAPI from "../APIs/DeleteNotesAPI";
 import log from "../Utils/log";
+import c from "../Utils/Colors";
 
 
 
@@ -129,7 +130,7 @@ const s = StyleSheet.create({
 
   t1: {
     textAlign: "center",
-    color: "#e8997eff",
+    color: c.c21,
     fontSize: 12
   },
 
@@ -137,8 +138,8 @@ const s = StyleSheet.create({
     paddingHorizontal: 10,
     marginHorizontal: 10,
     borderWidth: 1,
-    borderColor: "#76262dff",
-    backgroundColor: "#e8997eff",
+    borderColor: c.c22,
+    backgroundColor: c.c21,
     opacity: 0.3
   },
 
@@ -147,7 +148,7 @@ const s = StyleSheet.create({
     fontWeight: "800",
     textAlign: "center",
     padding: 0,
-    color: "#8d2300ff"
+    color: c.c23
   },
 
   v2: {

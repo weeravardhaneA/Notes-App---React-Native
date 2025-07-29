@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
+import c from "../Utils/Colors";
 
 const ScreenWidth = Dimensions.get("window").width;
 
@@ -55,13 +56,13 @@ const s = StyleSheet.create({
   v1: {
     width: ScreenWidth * 0.43,
     minHeight: 140,
-    backgroundColor: "#d1fae5",
+    backgroundColor: c.c14,
     borderRadius: 20,
     padding: 18,
     marginTop: 20,
     borderWidth: 2,
-    borderColor: "#10b981",
-    shadowColor: "#059669",
+    borderColor: c.c15,
+    shadowColor: c.c16,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.25,
     shadowRadius: 12,
@@ -72,13 +73,13 @@ const s = StyleSheet.create({
   v2: {
     width: ScreenWidth * 0.43,
     minHeight: 140,
-    backgroundColor: "#fff7ed",
+    backgroundColor: c.c17,
     borderRadius: 20,
     padding: 18,
     marginTop: 20,
     borderWidth: 1,
-    borderColor: "#fcd5ce",
-    shadowColor: "#f87171",
+    borderColor: c.c18,
+    shadowColor: c.c19,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 12,
@@ -89,7 +90,7 @@ const s = StyleSheet.create({
   t1: {
     fontSize: 21,
     fontWeight: "800",
-    color: "#9c4221",
+    color: c.c12,
     marginBottom: 10,
     letterSpacing: 0.5,
     lineHeight: 28,
@@ -100,7 +101,7 @@ const s = StyleSheet.create({
   t2: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#7c2d12",
+    color: c.c8,
     letterSpacing: 0.35,
     lineHeight: 26,
     includeFontPadding: false,

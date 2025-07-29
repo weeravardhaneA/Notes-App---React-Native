@@ -1,4 +1,5 @@
 import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from "react-native"
+import c from "../Utils/Colors";
 
 const LoadingScreen = () => {
 
@@ -24,7 +25,7 @@ const s = StyleSheet.create({
 
   sav1: {
     flex: 1,
-    backgroundColor: "#fff7ed"
+    backgroundColor: c.c17
   },
 
   v1: {
@@ -36,7 +37,7 @@ const s = StyleSheet.create({
   t1: {
     fontSize: 30,
     fontWeight: "800",
-    color: "#ac515eff",
+    color: c.c24,
     marginBottom: 20
   }
 

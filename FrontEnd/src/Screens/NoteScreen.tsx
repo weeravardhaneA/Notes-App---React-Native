@@ -6,6 +6,7 @@ import CancelButton from "../Components/Buttons/CancelButton";
 import SaveButton from "../Components/Buttons/SaveButton";
 import { useNoteHook } from "../Hooks/useNoteHook";
 import { useAppContext } from "../Hooks/useAppContext";
+import c from "../Utils/Colors";
 
 const NoteScreen = () => {
 
@@ -49,7 +50,7 @@ const s = StyleSheet.create({
 
   sav1: {
     flex: 1,
-    backgroundColor: "#fff7ed",
+    backgroundColor: c.c17,
   },
 
   v1: {
@@ -61,11 +62,11 @@ const s = StyleSheet.create({
   v2: {
     height: 60,
     borderTopWidth: 1,
-    borderTopColor: "#fde68a",
+    borderTopColor: c.c10,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: "#fef3c7",
+    backgroundColor: c.c4,
   },
 })
 

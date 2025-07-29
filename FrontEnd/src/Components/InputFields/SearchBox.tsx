@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
+import c from "../../Utils/Colors";
 
 // ==================================================
 // Types ==================================================
@@ -83,13 +84,13 @@ const s = StyleSheet.create({
     flex: 1,
     marginRight: 16,
     marginLeft: 12,
-    backgroundColor: "#fffbeb",
+    backgroundColor: c.c9,
     borderRadius: 14,
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderWidth: 1.5,
-    borderColor: "#fde68a",
-    shadowColor: "#fcd34d",
+    borderColor: c.c10,
+    shadowColor: c.c11,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 3,

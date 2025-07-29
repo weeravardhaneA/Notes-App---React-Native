@@ -6,18 +6,17 @@ import c from "../Utils/Colors";
 
 type props = {
 
-  title:string
+  text:string,
 
 }
 
 // ==================================================
 // ==================================================
 
-
-const NotePageHeader = (
+const ErrorBar = (
   {
-    title
-  
+    text,
+
   }:props
 
 ) => {
@@ -25,9 +24,9 @@ const NotePageHeader = (
   return(
 
     <View style={s.v1}>
-      
-      <Text>{title}</Text>
-    
+
+      <Text style={s.t1}>{text}</Text>
+
     </View>
 
   )
@@ -37,12 +36,19 @@ const NotePageHeader = (
 const s = StyleSheet.create({
 
   v1: {
-    paddingVertical: 18,
-    alignItems: "center",
-    borderBottomWidth: 2,
-    borderBottomColor: c.c18,
-    backgroundColor: c.c20,
+    backgroundColor: c.c6
   },
+  
+  t1: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: c.c5,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: c.c5,
+    borderRadius: 20,
+  }
+
 })
 
-export default NotePageHeader;
+export default ErrorBar;

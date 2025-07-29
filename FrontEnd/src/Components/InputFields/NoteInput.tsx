@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ScrollView, StyleSheet, TextInput } from "react-native";
+import c from "../../Utils/Colors";
 
 // ==================================================
 // Types ==================================================
@@ -46,7 +47,7 @@ const s = StyleSheet.create({
   i1: {
     fontWeight: "500",
     fontSize: 20,
-    color: "#7c2d12",
+    color: c.c8,
     paddingTop: 22,
     lineHeight: 36,
     letterSpacing: 0.4,

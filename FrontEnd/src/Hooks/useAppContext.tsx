@@ -19,7 +19,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const [ToDeleteFileExists, setToDeleteFileExists] = useState<boolean>(false)
   const [ToUpdateFileExists, setToUpdateFileExists] = useState<boolean>(false)
 
-  const [ActiveScreen, setActiveScreen] = useState("home")
+  const [ActiveScreen, setActiveScreen] = useState("auth")
   const [NoteStatus, setNoteStatus] = useState("")
 
   const [ClickedId, setClickedId] = useState<number>()
@@ -86,8 +86,6 @@ export const AppProvider = ({children}:AppProviderProps) => {
       setConnected,
       UnsyncedNotesExist,
       setUnsyncedNotesExist,
-      // UpdateData,
-      // DeleteData,
 
     }}>{children}</AppContext.Provider>
   )

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
+import c from "../../Utils/Colors";
 
 // ==================================================
 // Types ==================================================
@@ -46,10 +47,10 @@ const s = StyleSheet.create({
   i1: {
     fontWeight: "800",
     fontSize: 32,
-    color: "#9c4221",
+    color: c.c12,
     paddingBottom: 14,
     borderBottomWidth: 3,
-    borderBottomColor: "#fb923c",
+    borderBottomColor: c.c13,
     letterSpacing: 0.7,
     lineHeight: 40,
     includeFontPadding: false,

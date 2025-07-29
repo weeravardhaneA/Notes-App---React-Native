@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native"
+import c from "../../Utils/Colors"
 
 // ==================================================
 // Types ==================================================
@@ -37,8 +38,8 @@ const s = StyleSheet.create({
   t1: {
     fontSize: 38,
     fontWeight: "900",
-    color: "#0c4a6e",
-    textShadowColor: "#bae6fd",
+    color: c.c1,
+    textShadowColor: c.c2,
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 6,
   },

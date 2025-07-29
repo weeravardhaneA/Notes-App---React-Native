@@ -3,6 +3,7 @@ import HomeScreen from "./src/Screens/HomeScreen";
 import NoteScreen from "./src/Screens/NoteScreen";
 import LoadingScreen from './src/Screens/LoadingScreen';
 import { useStartupEffects } from './src/Hooks/useStartupEffects';
+import LoginRegisterScreen from "./src/Screens/LoginRegisterScreen";
 
 function App() {
   
@@ -18,31 +19,23 @@ function App() {
 
   // ==================================================
   // ==================================================
-
-  if(ActiveScreen === "home")
-  {
-    return (
   
-      <HomeScreen/>
-
-    );
+  if(ActiveScreen === "auth")
+  {
+    return( <LoginRegisterScreen/> );
+  }
+  else if(ActiveScreen === "home")
+  {
+    return ( <HomeScreen/> );
   }
   else if(ActiveScreen === "note")
   {
-    return(
-
-      <NoteScreen/>
-
-    )
+    return( <NoteScreen/> )
       
   }
   else
   {
-    return(
-
-      <LoadingScreen/>
-
-    )
+    return( <LoadingScreen/> )
   }
 }
 

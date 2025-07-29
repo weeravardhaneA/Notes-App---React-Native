@@ -6,6 +6,7 @@ import DeleteButton from "../Components/Buttons/DeleteButton";
 import AddButton from "../Components/Buttons/AddButton";
 import UnsyncedWarningBar from "../Components/UnsyncedWarningBar";
 import { useAppContext } from "../Hooks/useAppContext";
+import c from "../Utils/Colors";
 
 const ScreenWidth = Dimensions.get("window").width;
 
@@ -75,7 +76,7 @@ const s = StyleSheet.create({
   
   sav1: {
     flex: 1,
-    backgroundColor: "#fff7ed",
+    backgroundColor: c.c17,
   },
 
   v1: {
@@ -84,10 +85,10 @@ const s = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
     paddingRight: 24,
-    backgroundColor: "#fff7ed",
+    backgroundColor: c.c17,
     borderBottomWidth: 1,
-    borderBottomColor: "#fcd5ce",
-    shadowColor: "#f87171",
+    borderBottomColor: c.c18,
+    shadowColor: c.c19,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -104,7 +105,7 @@ const s = StyleSheet.create({
 
   v3: {
     borderTopWidth: 1,
-    borderTopColor: "#fcd5ce",
+    borderTopColor: c.c18,
   },
 
   colStyle: {
