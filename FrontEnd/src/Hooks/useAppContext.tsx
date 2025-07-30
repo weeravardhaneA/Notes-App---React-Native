@@ -42,6 +42,9 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const [Connected, setConnected] = useState<boolean|null>(null)
   const [UnsyncedNotesExist, setUnsyncedNotesExist] = useState<boolean>(false)
 
+  const [Error, setError] = useState<string>("")
+  const [ShowVerifyModal, setShowVerifyModal] = useState<boolean>(false)
+
 
   // ==================================================
   // ==================================================
@@ -86,6 +89,10 @@ export const AppProvider = ({children}:AppProviderProps) => {
       setConnected,
       UnsyncedNotesExist,
       setUnsyncedNotesExist,
+      Error,
+      setError,
+      ShowVerifyModal,
+      setShowVerifyModal,
 
     }}>{children}</AppContext.Provider>
   )

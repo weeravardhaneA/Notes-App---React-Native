@@ -35,7 +35,7 @@ const Input = (
 const s = StyleSheet.create({
   i1: {
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     fontSize: 16,
     borderRadius: 14,
     borderWidth: 1.5,

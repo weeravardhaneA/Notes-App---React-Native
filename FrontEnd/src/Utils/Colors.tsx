@@ -26,6 +26,7 @@ const c = {
   c24:  "#ac515eff",
   c25: "#f6dfdbff",
   c26: "#fecaca51",
+  c27: "#d5b8b8ad",
 
 }
 

@@ -1,34 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
 import c from "../Utils/Colors";
+import { useAppContext } from "../Hooks/useAppContext";
 
-// ==================================================
-// Types ==================================================
 
-type props = {
+const ErrorBar = () => {
 
-  text:string,
+  // ==================================================
+  // Declarations ==================================================
 
-}
+  const {Error} = useAppContext();
 
-// ==================================================
-// ==================================================
-
-const ErrorBar = (
-  {
-    text,
-
-  }:props
-
-) => {
+  // ==================================================
+  // ==================================================
 
   return(
-
+  
     <View style={s.v1}>
-
-      <Text style={s.t1}>{text}</Text>
-
+  
+      { Error ? <Text style={s.t1}>⚠️ {Error} ⚠️</Text> : null }
+  
     </View>
-
+  
   )
 
 }
@@ -36,7 +28,10 @@ const ErrorBar = (
 const s = StyleSheet.create({
 
   v1: {
-    backgroundColor: c.c6
+    maxWidth: "80%",
+    backgroundColor: c.c6,
+    justifyContent: "center",
+    alignItems: "center"
   },
   
   t1: {
@@ -47,6 +42,7 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderColor: c.c5,
     borderRadius: 20,
+    textAlign: "center"
   }
 
 })

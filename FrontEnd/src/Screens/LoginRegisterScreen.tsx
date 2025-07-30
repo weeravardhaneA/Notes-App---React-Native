@@ -4,13 +4,15 @@ import c from "../Utils/Colors";
 import Button1 from "../Components/Buttons/Button1";
 import { useLoginRegisterHook } from "../Hooks/useLoginRegisterHook"
 import ErrorBar from "../Components/ErrorBar";
+import { useAppContext } from "../Hooks/useAppContext";
+import VerifyModal from "../Components/VerifyModal";
 
 const LoginRegisterScreen = () => {
 
   // ==================================================
   // Declarations ==================================================
 
-  const {ActiveTab, OnLoginTabPress, OnRegisterTabPress, setEmail, setPassword, setConfirmPassword, OnLoginButtonPress, OnRegisterButtonPress, Error} = useLoginRegisterHook();
+  const {ActiveTab, OnLoginTabPress, OnRegisterTabPress, setEmail, setPassword, setConfirmPassword, OnLoginButtonPress, OnRegisterButtonPress, onConfirmPress} = useLoginRegisterHook();
 
   // ==================================================
   // ==================================================
@@ -46,9 +48,7 @@ const LoginRegisterScreen = () => {
 
           <View style={s.v4}>
 
-            {
-              Error ? <ErrorBar text={Error}/> : null
-            }
+            <ErrorBar/>
 
           </View>
 
@@ -121,6 +121,8 @@ const LoginRegisterScreen = () => {
 
 
       </View>
+
+      <VerifyModal onPress={onConfirmPress}/>
 
     </SafeAreaView>
 

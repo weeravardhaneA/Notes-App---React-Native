@@ -1,10 +1,10 @@
 const log = require("./log");
 
-const DeleteOne = async (collection, filter) => {
+const DeleteOne = async (model, filter) => {
 
   try
   {
-    const result = await collection.deleteOne(filter)
+    const result = await model.deleteOne(filter)
     log(result)
     return result;
   }

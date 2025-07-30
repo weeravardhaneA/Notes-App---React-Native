@@ -1,10 +1,10 @@
 const log = require("./log");
 
-const UpdateOne = async (collection, filter, fieldsToUpdate) => {
+const UpdateOne = async (model, filter, fieldsToUpdate) => {
 
   try
   {
-    const result = await collection.updateOne(filter, fieldsToUpdate, {upsert: true})
+    const result = await model.updateOne(filter, fieldsToUpdate, {upsert: true})
     log(result);
     return result;
   }

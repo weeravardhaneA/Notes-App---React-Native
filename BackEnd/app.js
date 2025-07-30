@@ -8,6 +8,7 @@ const log = require("./src/Utils/log");
 const RetrieveNotesAPI = require("./src/APIs/RetrieveNotesAPI");
 const UpdateNotesAPI = require("./src/APIs/UpdateNotesAPI");
 const DeleteNotesApi = require("./src/APIs/DeleteNotesAPI");
+const RegisterUserAPI = require("./src/APIs/RegisterUserAPI");
 
 const Connect = async () => {
 
@@ -24,6 +25,7 @@ const Connect = async () => {
     app.use("/api/notes/retrieve", RetrieveNotesAPI);
     app.use("/api/notes/update", UpdateNotesAPI);
     app.use("/api/notes/delete", DeleteNotesApi);
+    app.use("/api/user/register", RegisterUserAPI);
 
     app.listen(process.env.PORT || 5000)
     log("Connected");

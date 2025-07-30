@@ -1,10 +1,10 @@
 const log = require("./log");
 
-const RetrieveAll = async (collection) => {
+const RetrieveAll = async (model) => {
 
   try
   {
-    const result = await collection.find().lean();
+    const result = await model.find().lean();
     return result;
   }
   catch(err)
