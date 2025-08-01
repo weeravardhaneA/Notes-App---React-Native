@@ -13,15 +13,14 @@ const RegisterUserAPI = async (email:string, password:string) => {
     },{
   
       headers: {"Content-Type": "application/json"},
-      withCredentials: true,
-      timeout: 3000
+      timeout: 10000
   
     })
   
     const result = response.data;
     log(result)
 
-    if(response.status === 200 && result.success)
+    if(response.status === 200 && result?.message === "success")
     {
       return true;
     }

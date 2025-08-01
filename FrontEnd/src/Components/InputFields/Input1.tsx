@@ -7,14 +7,16 @@ type Props = TextInputProps & {
   inputStyle?: StyleProp<TextStyle>;
   variant?: "green" | "brown";
   onChangeText?:(value:string)=>void,
+  secureTextEntry?:boolean
   
 };
 
-const Input = (
+const Input1 = (
   {
     inputStyle,
     variant = "brown",
     onChangeText,
+    secureTextEntry,
     ...rest
   
   }: Props
@@ -27,6 +29,7 @@ const Input = (
       style={[s.i1, variant === "green" ? s.green : s.brown, inputStyle]}
       placeholderTextColor={variant === "green" ? "#065f46" : "#7c2d12"}
       onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry}
       {...rest}
     />
   );
@@ -52,4 +55,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default Input;
+export default Input1;

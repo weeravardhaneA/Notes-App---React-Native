@@ -13,7 +13,7 @@ const UpdateNotesAPI = async (DataArray:DataObjectType[]) => {
 
     log(result)
 
-    if(response.status === 200 && result.message === "success")
+    if(response.status === 200 && result?.message === "success")
     {
       return true;
     }

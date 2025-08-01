@@ -1,6 +1,7 @@
 // Label.tsx
-import React from "react";
-import { Text, View, StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacity, ActivityIndicator } from "react-native";
+import log from "../../Utils/log";
 
 // ==================================================
 // Types ==================================================
@@ -10,7 +11,8 @@ type Props = {
   text: string;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  onPress?:()=>void
+  onPress:()=>void,
+  disabled?:boolean,
 
 };
 
@@ -28,24 +30,71 @@ const Button1 = (
   }: Props
 
 ) => {
+
+  // ==================================================
+  // Declarations ==================================================
+
+  const [Loading, setLoading] = useState<boolean>(false)
+
+  // ==================================================
+  // onPress ==================================================
+
+  const onButtonPress = async () => {
+
+    setLoading(true)
+
+    try
+    {
+      await Promise.resolve(onPress());
+    }
+    catch(err)
+    {
+      log("Button1 onButtonPress failed")
+    }
+    finally
+    {
+      setLoading(false)
+    }
+
+  }
+
+  // ==================================================
+  // ==================================================
   
   return (
 
-    <TouchableOpacity
-      style={[s.b1, buttonStyle]}
-      onPress={onPress}
-      {...rest}
-    >
-    
-      <Text style={[s.t1, textStyle]}>{text}</Text>
-    
-    </TouchableOpacity>
+    <View style={s.v1}>
+      
+      {
+        Loading ?
+  
+        <ActivityIndicator color="red" size="small"/>
+  
+        :
+  
+        <TouchableOpacity
+          style={[s.b1, buttonStyle]}
+          onPress={onButtonPress}
+          {...rest}
+        >
+        
+          <Text style={[s.t1, textStyle]}>{text}</Text>
+        
+        </TouchableOpacity>
+      }
+
+    </View>
   
   );
   
 };
 
 const s = StyleSheet.create({
+  
+  v1: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   
   b1: {
     backgroundColor: "#fff7ed",

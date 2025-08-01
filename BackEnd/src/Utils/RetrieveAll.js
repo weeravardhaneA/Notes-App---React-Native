@@ -4,6 +4,11 @@ const RetrieveAll = async (model) => {
 
   try
   {
+    if(!model)
+    {
+      return false;
+    }
+
     const result = await model.find().lean();
     return result;
   }

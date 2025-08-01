@@ -31,7 +31,8 @@ const s = StyleSheet.create({
     maxWidth: "80%",
     backgroundColor: c.c6,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    opacity: 0.7
   },
   
   t1: {

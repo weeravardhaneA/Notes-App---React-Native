@@ -1,16 +1,17 @@
-import { Modal, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native"
 import { useAppContext } from "../Hooks/useAppContext"
 import c from "../Utils/Colors";
-import Input from "./InputFields/Input1";
+import Input1 from "./InputFields/Input1";
 import Button1 from "./Buttons/Button1";
 import { useState } from "react";
+import ErrorBar from "./ErrorBar";
 
 // ==================================================
 // Types ==================================================
 
 type props = {
 
-  onPress:(value:number)=>void
+  onPress:(value:string)=>void,
 
 }
 
@@ -64,43 +65,48 @@ const VerifyModal = ({onPress}:props) => {
             </View>
 
             <View style={s.v5}>
-              <Input 
+              <ErrorBar/>
+            </View>
+
+            <View style={s.v6}>
+              <Input1 
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 1)}
               />
-              <Input
+              <Input1
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 2)}
               />
-              <Input
+              <Input1
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 3)}
               />
-              <Input
+              <Input1
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 4)}
               />
-              <Input
+              <Input1
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 5)}
               />
-              <Input
+              <Input1
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
                 onChangeText={(text)=>onChangeText(parseInt(text), 6)}
               />
             </View>
 
-            <View style={s.v6}>
+            <View style={s.v7}>
               <Button1
                 text="Confirm"
-                buttonStyle={{width: 150, height: 30}}
-                onPress={()=>onPress(parseInt(DigitsArray.join("")))}
+                buttonStyle={{width: 150, height: 30, opacity: DigitsArray.length !== 6 ? 0.5 : 1}}
+                onPress={()=>onPress(DigitsArray.join(""))}
+                disabled={DigitsArray.length !== 6}
               />
             </View>
 
@@ -133,7 +139,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: c.c17,
-    elevation: 1
+    elevation: 1,
   },
 
   v3: {
@@ -165,6 +171,14 @@ const s = StyleSheet.create({
 
   v5: {
     width: "100%",
+    height: 20,
+    // borderWidth: 2,
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+
+  v6: {
+    width: "100%",
     height: 70,
     // borderWidth: 2,
     flexDirection: "row",
@@ -172,9 +186,9 @@ const s = StyleSheet.create({
     alignItems: "center"
   },
 
-  v6: {
+  v7: {
     width: "100%",
-    height: 90,
+    height: 70,
     // borderWidth: 2,
     justifyContent: "space-around",
     alignItems: "center"

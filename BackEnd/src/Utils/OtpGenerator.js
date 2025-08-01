@@ -1,4 +1,4 @@
-import log from "./log";
+const log = require("./log");
 
 const OtpGenerator = () => {
 
@@ -7,7 +7,7 @@ const OtpGenerator = () => {
     const max = 999999;
     const min = 100000;
     const otp = Math.floor(Math.random() * (max - min + 1)) + min;
-    return otp;
+    return otp.toString();
   }
   catch(err)
   {

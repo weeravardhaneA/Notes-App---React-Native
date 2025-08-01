@@ -66,6 +66,7 @@ const LoginRegisterScreen = () => {
                 placeholder="Password"
                 inputStyle={{width: 200}}
                 onChangeText={setPassword}
+                secureTextEntry={true}
               />
 
             </View>
@@ -83,11 +84,13 @@ const LoginRegisterScreen = () => {
                 placeholder="Password"
                 inputStyle={{width: 200}}
                 onChangeText={setPassword}
+                secureTextEntry={true}
               />
               <Input1
                 placeholder="Confirm Password"
                 inputStyle={{width: 200}}
                 onChangeText={setConfirmPassword}
+                secureTextEntry={true}
                 />
 
             </View>
@@ -107,7 +110,7 @@ const LoginRegisterScreen = () => {
               />
 
               :
-
+              
               <Button1
                 text={"Register"}
                 buttonStyle={{width: 100, height: 40, marginVertical: 5}}

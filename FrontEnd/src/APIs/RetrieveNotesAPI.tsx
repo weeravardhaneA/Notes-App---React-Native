@@ -12,7 +12,7 @@ const RetrieveNotesAPI = async () => {
 
     log(result)
 
-    if(response.status === 200 && result.message === "success")
+    if(response.status === 200 && result?.message === "success")
     {
       return result.data;
     }

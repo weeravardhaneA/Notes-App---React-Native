@@ -9,6 +9,7 @@ const RetrieveNotesAPI = require("./src/APIs/RetrieveNotesAPI");
 const UpdateNotesAPI = require("./src/APIs/UpdateNotesAPI");
 const DeleteNotesApi = require("./src/APIs/DeleteNotesAPI");
 const RegisterUserAPI = require("./src/APIs/RegisterUserAPI");
+const VerifyOtpAPI = require("./src/APIs/VerifyOtpAPI");
 
 const Connect = async () => {
 
@@ -18,7 +19,6 @@ const Connect = async () => {
 
     app.use(cors({
       origin: process.env.FRONTEND_ORIGIN || "*",
-      credentials: true
     }))
     app.use(express.json())
 
@@ -26,6 +26,7 @@ const Connect = async () => {
     app.use("/api/notes/update", UpdateNotesAPI);
     app.use("/api/notes/delete", DeleteNotesApi);
     app.use("/api/user/register", RegisterUserAPI);
+    app.use("/api/verify/otp", VerifyOtpAPI);
 
     app.listen(process.env.PORT || 5000)
     log("Connected");

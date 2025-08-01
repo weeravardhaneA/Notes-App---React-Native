@@ -5,6 +5,11 @@ const NodeMailer = async (email, otp) => {
 
   try
   {
+    if(!email || !otp)
+    {
+      return false;
+    }
+
     const transport = nodemailer.createTransport({
   
       service: "gmail",

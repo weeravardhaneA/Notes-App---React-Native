@@ -17,7 +17,8 @@ router.post("/", async (req, res) => {
 
     if(!email || !password || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(email) || password.length < 8)
     {
-      return res.status(400).json({success: false, message: "Please enter a valid email and a password with at least 8 characters."})
+      log("Please enter a valid email and a password with at least 8 characters.")
+      return res.status(400).json({message: "something went wrong"})
     }
 
     const filter = {email}
@@ -26,21 +27,24 @@ router.post("/", async (req, res) => {
     
     if(accExistsUsers || accExistsTempUsers)
     {
-      return res.status(400).json({success: false, message: "Registration failed. Please try again."})
+      log("Account with this email already exists in the Users or TempUsers.")
+      return res.status(400).json({message: "something went wrong"})
     }
 
     const otp = OtpGenerator();
 
     if(!otp)
     {
-      return res.status(400).json({success: false, message: "Failed to generate OTP. Please try again later."})
+      log("Failed to generate OTP.")
+      return res.status(400).json({message: "something went wrong"})
     }
 
     const emailResult = await NodeMailer(email, otp)
 
     if(!emailResult)
     {
-      return res.status(400).json({success: false, message: "Failed to send the OTP email. Please try again later."})
+      log("Failed to send the OTP email.")
+      return res.status(400).json({message: "something went wrong"})
     }
 
     const newDoc = {email, password, otp}
@@ -48,15 +52,16 @@ router.post("/", async (req, res) => {
 
     if(!insertResult)
     {
-      return res.status(400).json({success: false, message: "Something went wrong. Please try again later."})
+      log("failed to insert user to the TempUsers.")
+      return res.status(400).json({message: "something went wrong"})
     }
 
-    res.status(200).json({ success: true, message: "A verification code has been sent to your email." })
+    res.status(200).json({message: "success" })
   }
   catch(err)
   {
     log("RegisterUserAPI failed :=== " + err);
-    return res.status(500).json({success: false, message: "An unexpected server error occurred. Please try again."})
+    return res.status(500).json({success: false, message: "unexpected error."})
   }
 
 })

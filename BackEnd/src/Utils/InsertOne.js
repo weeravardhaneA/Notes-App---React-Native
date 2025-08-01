@@ -1,9 +1,14 @@
 const log = require("./log");
 
-const InsertOne = async (model) => {
+const InsertOne = async (model, newDoc) => {
 
   try
   {
+    if(!model || !newDoc)
+    {
+      return false;
+    }
+
     const result = await model.create(newDoc)
     return result;
   }

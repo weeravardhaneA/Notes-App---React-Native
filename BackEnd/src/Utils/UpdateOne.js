@@ -4,6 +4,11 @@ const UpdateOne = async (model, filter, fieldsToUpdate) => {
 
   try
   {
+    if(!model || !filter || !fieldsToUpdate)
+    {
+      return false;
+    }
+
     const result = await model.updateOne(filter, fieldsToUpdate, {upsert: true})
     log(result);
     return result;
