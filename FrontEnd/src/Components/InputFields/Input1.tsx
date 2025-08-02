@@ -1,5 +1,5 @@
 // Input.tsx
-import React from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { TextInput, StyleSheet, StyleProp, TextStyle, TextInputProps } from "react-native";
 
 type Props = TextInputProps & {
@@ -7,11 +7,11 @@ type Props = TextInputProps & {
   inputStyle?: StyleProp<TextStyle>;
   variant?: "green" | "brown";
   onChangeText?:(value:string)=>void,
-  secureTextEntry?:boolean
+  secureTextEntry?:boolean,
   
 };
 
-const Input1 = (
+const Input1 = forwardRef<TextInput, Props>((
   {
     inputStyle,
     variant = "brown",
@@ -19,13 +19,14 @@ const Input1 = (
     secureTextEntry,
     ...rest
   
-  }: Props
+  }, ref
   
   ) => {
 
   return(
 
     <TextInput
+      ref={ref}
       style={[s.i1, variant === "green" ? s.green : s.brown, inputStyle]}
       placeholderTextColor={variant === "green" ? "#065f46" : "#7c2d12"}
       onChangeText={onChangeText}
@@ -33,7 +34,7 @@ const Input1 = (
       {...rest}
     />
   );
-};
+});
 
 const s = StyleSheet.create({
   i1: {

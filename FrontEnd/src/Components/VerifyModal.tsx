@@ -1,9 +1,9 @@
-import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Modal, StyleSheet, Text, TextInput, View } from "react-native"
 import { useAppContext } from "../Hooks/useAppContext"
 import c from "../Utils/Colors";
 import Input1 from "./InputFields/Input1";
 import Button1 from "./Buttons/Button1";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ErrorBar from "./ErrorBar";
 
 // ==================================================
@@ -25,20 +25,38 @@ const VerifyModal = ({onPress}:props) => {
 
   const {ShowVerifyModal, setShowVerifyModal} = useAppContext();
 
-  const [DigitsArray, setDigitsArray] = useState<number[]>([])
+  const [DigitsArray, setDigitsArray] = useState<string[]>(["", "", "", "", "", "", ])
+
+  const I1ref = useRef<TextInput>(null)
+  const I2ref = useRef<TextInput>(null)
+  const I3ref = useRef<TextInput>(null)
+  const I4ref = useRef<TextInput>(null)
+  const I5ref = useRef<TextInput>(null)
+  const I6ref = useRef<TextInput>(null)
+
+  const refs = [I1ref, I2ref, I3ref, I4ref, I5ref, I6ref]
 
   // ==================================================
   // ==================================================
 
-  const onChangeText = (text:number, index:number) => {
+  const onChangeText = (text:string, index:number) => {
 
     setDigitsArray(item => {
 
-      const newArray = [...item];
-      newArray[index-1] = text;
-      return newArray;
-    
+      const newDigitsArray = [...item];
+      newDigitsArray[index-1] = text;
+      
+      const emptyStringIndex = newDigitsArray.indexOf("")
+  
+      if(emptyStringIndex !== -1)
+      {
+        refs[emptyStringIndex]?.current?.focus();
+      }
+
+      return newDigitsArray;
+
     })
+
 
   }
 
@@ -69,44 +87,50 @@ const VerifyModal = ({onPress}:props) => {
             </View>
 
             <View style={s.v6}>
-              <Input1 
+              <Input1
+                ref={I1ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 1)}
+                onChangeText={(text)=>onChangeText(text, 1)}
               />
               <Input1
+                ref={I2ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 2)}
+                onChangeText={(text)=>onChangeText(text, 2)}
               />
               <Input1
+                ref={I3ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 3)}
+                onChangeText={(text)=>onChangeText(text, 3)}
               />
               <Input1
+                ref={I4ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 4)}
+                onChangeText={(text)=>onChangeText(text, 4)}
               />
               <Input1
+                ref={I5ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 5)}
+                onChangeText={(text)=>onChangeText(text, 5)}
               />
               <Input1
+                ref={I6ref}
                 inputStyle={{width: 30, height: 40}}
                 keyboardType="numeric" maxLength={1}
-                onChangeText={(text)=>onChangeText(parseInt(text), 6)}
+                onChangeText={(text)=>onChangeText(text, 6)}
               />
             </View>
 
             <View style={s.v7}>
               <Button1
                 text="Confirm"
-                buttonStyle={{width: 150, height: 30, opacity: DigitsArray.length !== 6 ? 0.5 : 1}}
+                buttonStyle={{width: 150, height: 30, opacity: DigitsArray.includes("") ? 0.5 : 1}}
                 onPress={()=>onPress(DigitsArray.join(""))}
-                disabled={DigitsArray.length !== 6}
+                disabled={DigitsArray.includes("")}
               />
             </View>
 
