@@ -1,30 +1,30 @@
-// Label.tsx
-import React, { useState } from "react";
-import { Text, View, StyleSheet, StyleProp, ViewStyle, TextStyle, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ActivityIndicator, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import c from "../../Utils/Colors";
+import { useState } from "react";
 import log from "../../Utils/log";
 
 // ==================================================
 // Types ==================================================
 
 type propsType = {
-
-  text?: string;
-  buttonStyle?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
+  
+  text?:string,
   onPress?:()=>void,
-  disabled?:boolean,
+  buttonStyle?:StyleProp<ViewStyle>,
+  viewStyle?:StyleProp<ViewStyle>,
+  textStyle?:StyleProp<TextStyle>,
 
-};
+}
 
 // ==================================================
 // ==================================================
 
-const Button1 = (props:propsType) => {
+const FloatingButton = (props:propsType) => {
 
   // ==================================================
   // Declarations ==================================================
 
-  const {text, buttonStyle, textStyle, onPress, ...rest} = props;
+  const {text, onPress, buttonStyle, viewStyle, textStyle, ...rest} = props;
 
   const [Loading, setLoading] = useState<boolean>(false)
 
@@ -46,10 +46,11 @@ const Button1 = (props:propsType) => {
       }
 
       await Promise.resolve(onPress());
+
     }
     catch(err)
     {
-      log("Button1 onButtonPress failed")
+      log("DrawerButton onButtonPress failed")
     }
     finally
     {
@@ -60,61 +61,56 @@ const Button1 = (props:propsType) => {
 
   // ==================================================
   // ==================================================
-  
-  return (
 
-    <View style={s.v1}>
-      
+  return(
+
+    <View style={[s.v1, viewStyle]}>
+
       {
         Loading ?
-  
+        
         <ActivityIndicator color="red" size="small"/>
-  
+    
         :
-  
+
         <TouchableOpacity
           style={[s.b1, buttonStyle]}
           onPress={onButtonPress}
           {...rest}
         >
-        
+
           <Text style={[s.t1, textStyle]}>{text}</Text>
-        
+
         </TouchableOpacity>
+      
       }
 
     </View>
-  
-  );
-  
-};
+
+  )
+
+}
 
 const s = StyleSheet.create({
-  
+
   v1: {
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
   },
   
   b1: {
-    backgroundColor: "#fff7ed",
-    borderColor: "#fcd5ce",
-    borderWidth: 1.5,
-    borderRadius: 12,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
+    borderRadius: 16,
+    borderColor: c.c22,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   t1: {
-    fontSize: 14,
-    fontWeight: "600",
-    letterSpacing: 0.4,
-    color: "#7c2d12",
+    fontSize: 40,
     textAlign: "center"
-  },
+  }
+  
+})
 
-});
-
-export default Button1;
+export default FloatingButton;

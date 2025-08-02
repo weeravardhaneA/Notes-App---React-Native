@@ -2,11 +2,11 @@ import { Dimensions, FlatList, SafeAreaView, StyleSheet, View } from "react-nati
 import SearchBox from "../Components/InputFields/SearchBox"
 import NoteCard from "../Components/NoteCard"
 import { useHomeHook } from "../Hooks/useHomeHook";
-import DeleteButton from "../Components/Buttons/DeleteButton";
-import AddButton from "../Components/Buttons/AddButton";
 import UnsyncedWarningBar from "../Components/UnsyncedWarningBar";
 import { useAppContext } from "../Hooks/useAppContext";
 import c from "../Utils/Colors";
+import FloatingButton from "../Components/Buttons/FloatingButton";
+import Button1 from "../Components/Buttons/Button1";
 
 const ScreenWidth = Dimensions.get("window").width;
 
@@ -16,7 +16,7 @@ const HomeScreen = () => {
   // ==================================================
   // Declarations ==================================================
 
-  const {SelectModeOn, AllNotes, ShowingNotes, ToDeleteFileExists, ToUpdateFileExists} = useAppContext()
+  const {SelectModeOn, AllNotes, ShowingNotes, ToDeleteFileExists, ToUpdateFileExists} = useAppContext();
 
   const {CheckSelected, onDeletePress, onNotePress, onPlusPress, onNoteLongPress, onSearchTextChange} = useHomeHook();
 
@@ -33,7 +33,12 @@ const HomeScreen = () => {
 
         <View style={s.v2}>
 
-          { SelectModeOn ? <DeleteButton onPress={onDeletePress}/> : <AddButton onPress={onPlusPress}/> }
+          <Button1
+            text="⚙️"
+            buttonStyle={{width:40, height:50}}
+            textStyle={{fontSize:18}}
+            
+          />
 
         </View>
 
@@ -65,6 +70,30 @@ const HomeScreen = () => {
         />
 
       </View>
+
+      {
+        SelectModeOn ?
+
+        <FloatingButton
+          text="🗑️"
+          viewStyle={{width:45, height:45, right:20, bottom:20}}
+          buttonStyle={{}}
+          textStyle={{lineHeight:45, color:c.c22, fontSize:30}}
+          onPress={onDeletePress}
+        />
+          
+        :
+          
+        <FloatingButton
+          text="+"
+          viewStyle={{width:45, height:45, right:20, bottom:20}}
+          buttonStyle={{}}
+          textStyle={{lineHeight:45, color:c.c22, fontSize:40}}
+          onPress={onPlusPress}
+        />
+
+      }
+
   
     </SafeAreaView>
 
@@ -104,8 +133,10 @@ const s = StyleSheet.create({
   },
 
   v3: {
+    flex: 1,
     borderTopWidth: 1,
     borderTopColor: c.c18,
+    paddingVertical: 20
   },
 
   colStyle: {
