@@ -19,7 +19,7 @@ export const AppProvider = ({children}:AppProviderProps) => {
   const [ToDeleteFileExists, setToDeleteFileExists] = useState<boolean>(false)
   const [ToUpdateFileExists, setToUpdateFileExists] = useState<boolean>(false)
 
-  const [ActiveScreen, setActiveScreen] = useState("auth")
+  const [ActiveScreen, setActiveScreen] = useState("loading")
   const [NoteStatus, setNoteStatus] = useState("")
 
   const [ClickedId, setClickedId] = useState<number>()

@@ -3,6 +3,7 @@ import { useAppContext } from "./useAppContext"
 import RegisterUserAPI from "../APIs/RegisterUserAPI";
 import VerifyOtpAPI from "../APIs/VerifyOtpAPI";
 import log from "../Utils/log";
+import { useSharedHook } from "./useSharedHook";
 
 export const useLoginRegisterHook = () => {
 
@@ -10,6 +11,8 @@ export const useLoginRegisterHook = () => {
   // Declarations ==================================================
 
   const {setError, setShowVerifyModal, setActiveScreen, Connected} = useAppContext();
+
+  const {SaveToken} = useSharedHook();
 
   const [ActiveTab, setActiveTab] = useState<string>("login")
   const [Email, setEmail] = useState<string>("")
@@ -95,9 +98,9 @@ export const useLoginRegisterHook = () => {
       const result = await RegisterUserAPI(trimmedEmail, Password)
   
       if(result)
-        {
-          setError("")
-          setShowVerifyModal(true)
+      {
+        setError("")
+        setShowVerifyModal(true)
       }
       else
       {
@@ -137,20 +140,21 @@ export const useLoginRegisterHook = () => {
       }
       else{setError("")}
   
-      const result = await VerifyOtpAPI(Email, trimmedOtp)
+      const token = await VerifyOtpAPI(Email, trimmedOtp)
   
-      if(result)
-      {
-        setActiveScreen("home")
-        setEmail("")
-        setPassword("")
-        setConfirmPassword("")
-      }
-      else
+      if(!token)
       {
         setError("Something went wrong. Please try again.")
         setShowVerifyModal(false)
+        return;
       }
+
+      await SaveToken(token)
+      setActiveScreen("home")
+      setEmail("")
+      setPassword("")
+      setConfirmPassword("")
+      
     }
     catch(err)
     {

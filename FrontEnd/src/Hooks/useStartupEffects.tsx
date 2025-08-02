@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import NetInfo from '@react-native-community/netinfo';
 import { useAppContext } from "./useAppContext";
 import { useOnStartHook } from "./useOnStartHook";
+import { useSharedHook } from "./useSharedHook";
 
 
 export const useStartupEffects = () => {
@@ -9,9 +10,11 @@ export const useStartupEffects = () => {
   // ==================================================
   // Declarations ==================================================
 
-  const {setConnected, setShowingNotes, AllNotes} = useAppContext();
+  const {setConnected, setShowingNotes, AllNotes, setActiveScreen} = useAppContext();
 
   const {SyncNotesFromStorage, SyncPendingChanges} = useOnStartHook();
+
+  const {RetrieveToken} = useSharedHook();
 
   // ==================================================
   // ==================================================
@@ -57,6 +60,28 @@ export const useStartupEffects = () => {
       
     })()
     
+  }, [])
+
+  // ==================================================
+  // ==================================================
+
+  useEffect(() => {
+
+    (async () => {
+
+      const token = await RetrieveToken("token")
+
+      if(token)
+      {
+        setActiveScreen("home")
+      }
+      else
+      {
+        setActiveScreen("auth")
+      }
+
+    })()
+
   }, [])
 
   // ==================================================

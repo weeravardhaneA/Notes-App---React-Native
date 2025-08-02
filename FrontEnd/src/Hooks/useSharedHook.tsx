@@ -5,6 +5,7 @@ import ReadFile from "../Utils/ReadFile";
 import { DataObjectType } from "../Types/Types"
 import { useAppContext } from "./useAppContext"
 import RNFS from "react-native-fs"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useSharedHook = () => {
 
@@ -115,8 +116,47 @@ export const useSharedHook = () => {
   // ==================================================
   // ==================================================
 
+  const SaveToken = async (token:string) => {
+
+    try
+    {
+      await AsyncStorage.setItem("token", token)
+      return true;
+    }
+    catch(err)
+    {
+      log("SaveToken failed : ", err)
+      return false;
+    }
+  }
+
+  // ==================================================
+  // ==================================================
+
+  const RetrieveToken = async (token:string) => {
+
+    try
+    {
+      const result = await AsyncStorage.getItem(token)
+      return result;
+    }
+    catch(err)
+    {
+      log("RetrieveToken failed : ", err)
+      return false;
+    }
+  }
+
+  // ==================================================
+  // ==================================================
+
+  // ==================================================
+  // ==================================================
+
   return{
     UpdateData,
-    DeleteData
+    DeleteData,
+    SaveToken,
+    RetrieveToken,
   }
 }

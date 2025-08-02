@@ -22,7 +22,7 @@ const VerifyOtpAPI = async (email:string, otp:string) => {
 
     if(response.status === 200 && result?.message==="success")
     {
-      return true;
+      return result.token;
     }
     else
     {

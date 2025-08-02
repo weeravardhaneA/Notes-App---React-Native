@@ -5,7 +5,8 @@ const TempUserModel = require("../Models/TempUserModel");
 const InsertOne = require("../Utils/InsertOne");
 const UserModel = require("../Models/UserModel");
 const BcryptHash = require("../Utils/BcryptHash");
-const DeleteOne = require("../Utils/DeleteOne")
+const DeleteOne = require("../Utils/DeleteOne");
+const JwtGenerator = require("../Utils/JwtGenerator");
 const router = express.Router();
 
 
@@ -57,7 +58,35 @@ router.post("/", async (req, res) => {
       return res.status(400).json({message: "something went wrong"})
     }
 
-    dataObj.password = await BcryptHash(dataObj.password)
+    delete dataObj.otp;
+
+    const hashedPassword = await BcryptHash(dataObj.password)
+
+    if(!hashedPassword)
+    {
+      log("failed to generate a hashedPassword")
+      return res.status(400).json({message: "something went wrong"})
+    }
+
+    dataObj.password = hashedPassword;
+
+    const token = JwtGenerator({email})
+
+    if(!token)
+    {
+      log("failed to generate a jwt token")
+      return res.status(400).json({message: "something went wrong"})
+    }
+
+    dataObj.token = token;
+
+    const deleteSuccess = await DeleteOne(TempUserModel, filter)
+
+    if(!deleteSuccess)
+    {
+      log("failed to delete user from TempUsers")
+      return res.status(400).json({message: "something went wrong"})
+    }
 
     const insertSuccess = await InsertOne(UserModel, dataObj)
 
@@ -67,14 +96,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({message: "something went wrong"})
     }
 
-    const deleteSuccess = await DeleteOne(TempUserModel, filter)
-
-    if(!deleteSuccess)
-    {
-      log("failed to delete user from TempUsers")
-    }
-    
-    return res.status(200).json({message: "success"})
+    return res.status(200).json({message: "success", token})
   }
   catch(err)
   {
